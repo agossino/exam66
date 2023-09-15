@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "exam66"
+version = "0.1.0"
+description = "Django app for managing examination questions."
+authors = ["Giancarlo Ossino <gcossino@gmail.com>"]
+license = "MIT License"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Django = "^4.2.5"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+pytest = "^7.4.2"
+flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
