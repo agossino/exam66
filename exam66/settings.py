@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "examination.apps.ExaminationConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -54,7 +55,6 @@ ROOT_URLCONF = "exam66.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        #'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'DIRS': [BASE_DIR / 'templates'],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -76,8 +76,12 @@ WSGI_APPLICATION = "exam66.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "exam66db",
+        "USER": "user",
+        "PASSWORD": "pw",
+        "HOST": "127.0.0.1",
+        "PORT": "5432",
     }
 }
 
