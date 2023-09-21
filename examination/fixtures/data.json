@@ -1,0 +1,235 @@
+[
+    {
+        "model": "examination.multichoicequestion",
+        "pk": 1,
+        "fields": {
+            "text": "The genetic material — which came from a 130-year-old Tasmanian tiger, or thylacine, specimen in the collection of the Swedish Museum of Natural History in Stockholm — has allowed scientists to better understand how the animal’s genes functioned.",
+            "module": "9",
+            "chapter": "",
+            "answer": "The researchers shared their findings in a study published Tuesday in the scientific journal Genome Research",
+            "alt_answer1": "About the size of a coyote, the thylacine was a marsupial predator",
+            "alt_answer2": "RNA gives you the chance to go through the cell, the tissues and find the real biology that has been preserved in time for that animal, the thylacine species, right before they died",
+            "alt_answer3": "It disappeared about 2,000 years ago virtually everywhere except the Australian island state of Tasmania, where the population was hunted to the point of extinction by European settlers",
+            "valid": true,
+            "level": 3,
+            "saving_date": "2023-09-10"
+        }
+    },
+    {
+        "model": "examination.multichoicequestion",
+        "pk": 2,
+        "fields": {
+            "text": "The US Fish and Wildlife Service assessed the fallout from the launch and said it included “large concrete chunks, stainless steel sheets, metal and other objects hurled thousands of feet away, along with a plume cloud of pulverized concrete that deposited material up to 6.5 miles northwest of the pad site,” according to a statement from the agency.",
+            "module": "",
+            "chapter": "31",
+            "answer": "The researchers shared their findings in a study published Tuesday in the scientific journal Genome Research",
+            "alt_answer1": "About the size of a coyote, the thylacine was a marsupial predator",
+            "alt_answer2": "Grush said that, like many Americans, she grew up knowing Ride’s name and her historic accomplishment. But the journalist started wondering about the other women who had trained alongside Ride in NASA’s first coed astronaut class. Those women — all formidable and accomplished in their own right — had also vied for a chance to be on that same historic shuttle flight. In Grush’s book, out Tuesday, Ride’s selection for the landmark voyage becomes a jumping-off point for an even deeper story about the US space agency’s first women astronauts, including what happened during their first flights, the pressures they faced on the job, and the barrage of sexist questions they fielded along the way.",
+            "alt_answer3": "It disappeared about 2,000 years ago virtually everywhere except the Australian island state of Tasmania, where the population was hunted to the point of extinction by European settlers",
+            "valid": false,
+            "level": 2,
+            "saving_date": "2022-01-15"
+        }
+    },
+    {
+        "model": "examination.multichoicequestion",
+        "pk": 3,
+        "fields": {
+            "text": "Other winners included Monika Deviat in the Aurorae category for her abstract image of an aurora in the shape of a brushstroke; Ethan Chappel in the Our Moon category for capturing the moon passing in front of Mars; Eduardo Schaberger Poupeau in the Our Sun category for snapping the sun with a huge solar filament in the shape of a question mark; and Angel An in the Skyscapes category for capturing the extremely rare phenomenon of Sprites, in which atmospheric luminescence appears like fireworks.",
+            "module": "",
+            "chapter": "22",
+            "answer": "The researchers shared their findings in a study published Tuesday in the scientific journal Genome Research",
+            "alt_answer1": "About the size of a coyote, the thylacine was a marsupial predator",
+            "alt_answer2": "RNA gives you the chance to go through the cell, the tissues and find the real biology that has been preserved in time for that animal, the thylacine species, right before they died",
+            "alt_answer3": "It disappeared about 2,000 years ago virtually everywhere except the Australian island state of Tasmania, where the population was hunted to the point of extinction by European settlers",
+            "valid": true,
+            "level": 3,
+            "saving_date": "2023-09-10"
+        }
+    },
+    {
+        "model": "examination.essayquestion",
+        "pk": 1,
+        "fields": {
+            "module": "7A",
+            "text": "The last thylacine living in captivity, named Benjamin, died from exposure in 1936 at the Beaumaris Zoo in Hobart, Tasmania",
+            "valid": true,
+            "level": 1,
+            "saving_date": "2023-06-20"
+        }
+    },
+    {
+        "model": "examination.essayquestion",
+        "pk": 2,
+        "fields": {
+            "module": "11",
+            "text": "We were far from the epicenter and walked away unscathed, but the experience left me feeling humbled by nature's raw power",
+            "valid": false,
+            "level": 2,
+            "saving_date": "2020-06-26"
+        }
+    },
+    {
+        "model": "examination.essayquestion",
+        "pk": 3,
+        "fields": {
+            "module": "9B",
+            "text": "The James Webb Space Telescope has discovered exciting — if tentative — evidence that a planet in its host star’s habitable zone could support water",
+            "valid": true,
+            "level": 3,
+            "saving_date": "2022-10-07"
+        }
+    },
+    {
+        "model": "examination.mcquestionusage",
+        "pk": 1,
+        "fields": {
+            "usage_date": "2023-07-21",
+            "question": 2
+        }
+    },
+    {
+        "model": "examination.mcquestionusage",
+        "pk": 2,
+        "fields": {
+            "usage_date": "2023-09-11",
+            "question": 1
+        }
+    },
+    {
+        "model": "examination.essayquestionusage",
+        "pk": 1,
+        "fields": {
+            "usage_date": "2023-09-20",
+            "question": 1
+        }
+    },
+    {
+        "model": "examination.essayquestionusage",
+        "pk": 2,
+        "fields": {
+            "usage_date": "2023-08-20",
+            "question": 3
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 1,
+        "fields": {
+            "category": "A1"
+        }
+    },{
+        "model": "examination.category",
+        "pk": 2,
+        "fields": {
+            "category": "A2"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 3,
+        "fields": {
+            "category": "A3"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 4,
+        "fields": {
+            "category": "A4"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 5,
+        "fields": {
+            "category": "B1.1"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 6,
+        "fields": {
+            "category": "B1.2"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 7,
+        "fields": {
+            "category": "B1.3"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 8,
+        "fields": {
+            "category": "B1.4"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 9,
+        "fields": {
+            "category": "B2"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 10,
+        "fields": {
+            "category": "B3"
+        }
+    },
+    {
+        "model": "examination.category",
+        "pk": 11,
+        "fields": {
+            "category": "C"
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 1,
+        "fields": {
+            "answer": "An analysis of Webb’s observations found the planet has abundant methane and carbon dioxide in its atmosphere",
+            "key_points": "Finding this species in Italy was a big surprise, but we knew this day would come",
+            "question": 1,
+            "category": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 2,
+        "fields": {
+            "answer": "They shared something notable in common: None of them had been trained to fly jets, though Resnik, Lucid and Seddon had some piloting experience. The space shuttle program had added the new role of mission specialist, which didn't require flying experience. “NASA was able to open up the criteria to people like scientists and doctors. … So that allowed for, not just women and people of color, but more people with different backgrounds to join the program,” Grush said",
+            "key_points": "Dinosaur specimens remain rare on the art market, with no more than a couple of sales a year worldwide, Giquello said",
+            "question": 1,
+            "category": [
+                3,
+                4
+            ]
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 3,
+        "fields": {
+            "answer": "Now, one of the world's most rampant invasive species, the red fire ant, has been detected in Europe for the first time",
+            "key_points": "An unusually well-preserved dinosaur skeleton, a Camptosaurus known as Barry, will go under the hammer in Paris next month",
+            "question": 3,
+            "category": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                11
+            ]
+        }
+    }
+]
