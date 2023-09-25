@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block content_block %}
+{% for question in questions %}
+    <li>{{ question.id }} {{ question.text }} {{question.chapter}} {{question.module}} {{ question.level }}</li>
+{% endfor %}
+{% endblock content_block %}
