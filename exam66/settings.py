@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-4%gnwd^j^ow#3@ck*+ph7j(mhx$ekp@lx_s%6(uwuij+*#&2gd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -131,3 +131,9 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Added for password reset by email
+# https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication#testing_the_new_authentication_pages
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
