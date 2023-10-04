@@ -137,3 +137,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Authentication#testing_the_new_authentication_pages
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+
+# Added for after login redirect
+
+LOGIN_REDIRECT_URL = "/examination/"

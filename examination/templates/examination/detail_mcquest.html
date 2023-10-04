@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+{{ object.id }}
+{{ object.text|truncatewords:30|linebreaks }}
+{{ object.answer }}
+{{ object.alt_answer1|truncatewords:30|linebreaks }}
+{{ object.alt_answer2|truncatewords:30|linebreaks }}
+{{ object.alt_answer3|truncatewords:30|linebreaks }}
+{{ object.level }}
+{{ object.validity }}
+{% endblock content_block %}

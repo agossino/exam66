@@ -3,7 +3,7 @@ run:
 
 lint:
 	poetry run black examination/ exam66/
-	poetry run flake8
+	poetry run ruff examination/ exam66/
 
 test:
 	poetry run pytest
