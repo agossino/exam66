@@ -36,6 +36,7 @@ class MultichoiceQuestion(models.Model):
 
     class Meta:
         ordering = ("-saving_date", "module", "chapter")
+        constraints = [models.CheckConstraint(check=models.Q(module="") ^ models.Q(chapter=""), name="module_xor_chapter")]
 
     def __str__(self) -> str:
         return self.text
