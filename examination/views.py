@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView, TemplateView
+from django.views.generic import DetailView, ListView, FormView, TemplateView
 
 
 from .models import MultichoiceQuestion
+from .forms import MCQuestionForm
 
 
 class HomeView(TemplateView):
@@ -29,6 +30,12 @@ class MCQuestionDetailView(PermissionRequiredMixin, DetailView):
     template_name = "examination/detail.html"
     model = MultichoiceQuestion
     template_name = "examination/detail_mcquest.html"
+
+
+class MCQuestionFormView(FormView):
+    template_name = "examination/form.html"
+    form_class = MCQuestionForm
+    success_url = "/thanks/"
 
 
 def mdn(request):

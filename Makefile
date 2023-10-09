@@ -11,6 +11,9 @@ test:
 cov:
 	poetry run pytest --cov-report term-missing --cov=examination
 
+drop-testdb:
+	dropdb -h localhost -U user test_exam66db
+
 start-cont:
 	docker start psqlbox
 

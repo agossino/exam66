@@ -25,128 +25,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Category",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "category",
-                    models.CharField(
-                        max_length=5, verbose_name="Licence category and subcategory"
-                    ),
-                ),
-            ],
-        ),
-        migrations.CreateModel(
-            name="EssayAnswer",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("answer", models.TextField(verbose_name="Essay answer")),
-                (
-                    "key_points",
-                    models.CharField(max_length=150, verbose_name="Answer key points"),
-                ),
-                (
-                    "question",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="examination.essayquestions",
-                    ),
-                ),
-                ("category", models.ManyToManyField(to="examination.category")),
-            ],
-        ),
-        migrations.CreateModel(
-            name="EssayQuestionUsage",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "question",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="examination.essayquestions",
-                    ),
-                ),
-                (
-                    "usage_date",
-                    models.DateField(
-                        default=django.utils.timezone.now,
-                        verbose_name="The date the essay question has been used",
-                    ),
-                ),
-            ],
-        ),
-        migrations.CreateModel(
-            name="MCQuestionUsage",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                (
-                    "question",
-                    models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE,
-                        to="examination.multichoicequestions",
-                    ),
-                ),
-                (
-                    "usage_date",
-                    models.DateField(
-                        default=django.utils.timezone.now,
-                        verbose_name="The date the multichoice question has been used",
-                    ),
-                ),
-            ],
-        ),
-        migrations.CreateModel(
-            name="EssayQuestion",
-            fields=[
-                (
-                    "id",
-                    models.BigAutoField(
-                        auto_created=True,
-                        primary_key=True,
-                        serialize=False,
-                        verbose_name="ID",
-                    ),
-                ),
-                ("module", models.CharField(max_length=5)),
-                ("text", models.TextField()),
-                ("valid", models.BooleanField(default=True)),
-                ("level", models.IntegerField(choices=[(1, "1"), (2, "2"), (3, "3")])),
-                ("saving_date", models.DateField(auto_now=True)),
-            ],
-        ),
-        migrations.CreateModel(
             name="MultiChoiceQuestion",
             fields=[
                 (
@@ -213,19 +91,130 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="multichoicequestion",
             constraint=models.CheckConstraint(
-                check=models.Q(("module", ""), ("chapter", ""), _connector="OR"),
-                name="module_or_chapter",
-            ),
-        ),
-        migrations.RemoveConstraint(
-            model_name="multichoicequestion",
-            name="module_or_chapter",
-        ),
-        migrations.AddConstraint(
-            model_name="multichoicequestion",
-            constraint=models.CheckConstraint(
                 check=models.Q(("module", ""), ("chapter", ""), _connector="XOR"),
                 name="module_xor_chapter",
             ),
+        ),
+        migrations.CreateModel(
+            name="EssayQuestion",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("module", models.CharField(max_length=5)),
+                ("text", models.TextField()),
+                ("valid", models.BooleanField(default=True)),
+                ("level", models.IntegerField(choices=[(1, "1"), (2, "2"), (3, "3")])),
+                ("saving_date", models.DateField(auto_now=True)),
+            ],
+        ),
+        migrations.CreateModel(
+            name="MCQuestionUsage",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="examination.multichoicequestion",
+                    ),
+                ),
+                (
+                    "usage_date",
+                    models.DateField(
+                        default=django.utils.timezone.now,
+                        verbose_name="The date the multichoice question has been used",
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="EssayQuestionUsage",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="examination.essayquestion",
+                    ),
+                ),
+                (
+                    "usage_date",
+                    models.DateField(
+                        default=django.utils.timezone.now,
+                        verbose_name="The date the essay question has been used",
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="Category",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "category",
+                    models.CharField(
+                        max_length=5, verbose_name="Licence category and subcategory"
+                    ),
+                ),
+            ],
+        ),
+        migrations.CreateModel(
+            name="EssayAnswer",
+            fields=[
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("answer", models.TextField(verbose_name="Essay answer")),
+                (
+                    "key_points",
+                    models.CharField(max_length=150, verbose_name="Answer key points"),
+                ),
+                (
+                    "question",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="examination.essayquestion",
+                    ),
+                ),
+                ("category", models.ManyToManyField(to="examination.category")),
+            ],
         ),
     ]
