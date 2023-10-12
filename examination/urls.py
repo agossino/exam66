@@ -16,6 +16,4 @@ urlpatterns = [
         views.MCQuestionFormView.as_view(),
         name="mcquestion_form",
     ),
-    # for test purpose
-    path("mdn", views.mdn, name="mdn"),
 ]

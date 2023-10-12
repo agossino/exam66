@@ -7,6 +7,8 @@ from .models import (
     EssayQuestionUsage,
     EssayAnswer,
     Category,
+    SubjectModule,
+    Chapter,
 )
 
 admin.site.register(
@@ -16,6 +18,8 @@ admin.site.register(
         EssayQuestionUsage,
         Category,
         EssayAnswer,
+        SubjectModule,
+        Chapter,
     ]
 )
 
@@ -24,5 +28,5 @@ admin.site.register(
 class MCQuestionAdmin(admin.ModelAdmin):
     list_display = ("text", "module", "chapter", "level")
     search_fields = ("text", "module", "chapter", "level", "valid")
-    date_hierarchy = "saving_date"
-    ordering = ("module", "chapter", "saving_date")
+    date_hierarchy = "saving_time"
+    ordering = ("module", "chapter", "saving_time")

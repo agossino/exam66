@@ -1,5 +1,4 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import render
 from django.views.generic import DetailView, ListView, FormView, TemplateView
 
 
@@ -36,7 +35,3 @@ class MCQuestionFormView(FormView):
     template_name = "examination/form.html"
     form_class = MCQuestionForm
     success_url = "/thanks/"
-
-
-def mdn(request):
-    return render(request, "examination/mdn_structure.html")

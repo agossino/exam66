@@ -6,6 +6,17 @@ import pytest
 
 
 @pytest.mark.django_db
+def test_users():
+    from django.contrib.auth.models import User
+
+    users = User.objects.all()
+
+    users_list = [user.username for user in users]
+
+    assert users_list == ["examiner0"]
+
+
+@pytest.mark.django_db
 class TestCreateuser:
     def test_user_created(self):
         group = "new_group"
