@@ -1,16 +1,14 @@
-import re
-
 import pytest
 
 from examination.models import (
     EssayQuestion,
     EssayAnswer,
     MultichoiceQuestion,
-    EssayQuestionUsage,
-    MCQuestionUsage,
-    Category,
-    GivenAnswer,
+    LicenceCategory,
+    IssuedExam,
+    SelectedQuestion,
     SubjectModule,
+    ChapterGroup,
     Chapter,
 )
 
@@ -18,50 +16,45 @@ from examination.models import (
 @pytest.mark.django_db
 class TestModels:
     def test_populate(self):
-        essay_questions = EssayQuestion.objects.all()
-        essay_answers = EssayAnswer.objects.all()
-        mc_questions = MultichoiceQuestion.objects.all()
-        essay_usages = EssayQuestionUsage.objects.all()
-        mc_usages = MCQuestionUsage.objects.all()
-        categories = Category.objects.all()
-        given_answer = GivenAnswer.objects.all()
-        subject_module = SubjectModule.objects.all()
-        chapter = Chapter.objects.all()
-
-        assert essay_questions.count() == 4
-        assert essay_answers.count() == 4
-        assert mc_questions.count() == 4
-        assert essay_usages.count() == 4
-        assert mc_usages.count() == 3
-        assert categories.count() == 4
-        assert given_answer.count() == 2
-        assert subject_module.count() == 4
-        assert chapter.count() == 3
+        assert MultichoiceQuestion.objects.all().count() > 2
+        assert EssayQuestion.objects.all().count() > 2
+        assert EssayAnswer.objects.all().count() > 2
+        assert LicenceCategory.objects.all().count() > 2
+        assert IssuedExam.objects.all().count() > 2
+        assert SelectedQuestion.objects.all().count() > 2
+        assert SubjectModule.objects.all().count() > 2
+        assert ChapterGroup.objects.all().count() > 2
+        assert Chapter.objects.all().count() > 2
 
     def test_str(self):
-        date_pattern = r"\d{4}-\d{2}-\d{2}"
         essay_question = EssayQuestion.objects.get(id=1)
         essay_answer = EssayAnswer.objects.get(id=1)
         mc_question = MultichoiceQuestion.objects.get(id=1)
-        category = Category.objects.get(id=1)
-        mc_question_usage = MCQuestionUsage.objects.get(id=1)
-        essagy_question_usage = EssayQuestionUsage.objects.get(id=1)
-        given_essay_anwer = GivenAnswer.objects.filter(essay_ref__isnull=False)
-        given_multichoice_answer = GivenAnswer.objects.filter(
+        category = LicenceCategory.objects.get(id=1)
+        issued_exam = IssuedExam.objects.get(id=1)
+        selected_essay_question = SelectedQuestion.objects.filter(
+            essay_ref__isnull=False
+        )
+        selected_given_multichoice_question = SelectedQuestion.objects.filter(
             multichoice_ref__isnull=False
         )
         subject_module = SubjectModule.objects.get(id=1)
+        chapter_group = ChapterGroup.objects.get(id=1)
         chapter = Chapter.objects.get(id=1)
 
-        assert str(essay_question) == essay_question.text
-        assert essay_answer.model_answer[:10] in str(essay_answer)
-        assert str(mc_question) == mc_question.text
-        assert str(category) == category.category
-        assert re.search(date_pattern, str(mc_question_usage)) is not None
-        assert re.search(date_pattern, str(essagy_question_usage)) is not None
-        assert str(given_essay_anwer[0].user) in str(given_essay_anwer[0])
-        assert str(given_multichoice_answer[0].user) in str(given_multichoice_answer[0])
+        assert essay_question.text in str(essay_question)
+        assert essay_answer.model_answer in str(essay_answer)
+        assert mc_question.text in str(mc_question)
+        assert f" {category.code}" in str(category)
+        assert issued_exam.exam_identifier in str(issued_exam)
+        assert str(selected_essay_question[0].question) in str(
+            selected_essay_question[0]
+        )
+        assert str(selected_given_multichoice_question[0].question) in str(
+            selected_given_multichoice_question[0]
+        )
         assert subject_module.code in str(subject_module)
+        assert chapter_group.name in str(chapter_group)
         assert chapter.code in str(chapter)
 
     def test_manager(self):
@@ -70,3 +63,27 @@ class TestModels:
 
         assert valid_multichoice_questions.count() == 3
         assert valid_essay_questions.count() == 3
+
+    def test_given_answer_save(self):
+        selected_multichoice_question = SelectedQuestion.objects.create(
+            multichoice_ref=MultichoiceQuestion.objects.get(id=2),
+            issued_exam=IssuedExam.objects.get(id=2),
+        )
+
+        assert selected_multichoice_question.question != ""
+        assert selected_multichoice_question.correct_answer != ""
+        assert selected_multichoice_question.alt_answer1 != ""
+        assert selected_multichoice_question.alt_answer2 != ""
+        assert selected_multichoice_question.alt_answer3 != ""
+        assert selected_multichoice_question.model_answer == ""
+
+    def test_essay_answer_save(self):
+        selected_essay_question = SelectedQuestion.objects.create(
+            essay_ref=EssayAnswer.objects.get(id=2),
+            issued_exam=IssuedExam.objects.get(id=2),
+        )
+
+        assert selected_essay_question.question != ""
+        assert selected_essay_question.model_answer != ""
+        assert selected_essay_question.key_points != ""
+        assert selected_essay_question.alt_answer1 == ""

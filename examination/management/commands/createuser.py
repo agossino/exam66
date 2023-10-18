@@ -48,3 +48,11 @@ class Command(BaseCommand):
         user.groups.add(examiners)
 
         self.stdout.write(self.style.SUCCESS("User %s created" % user.username))
+
+    # def play_with_group_permission(self, *arg, **kwargs):
+    #     permission_name = "Can change given answer"
+    #     examinee = Group.objects.create(name="examinee")
+    #     can_change_given_answer = Permission.objects.get(name=permission_name)
+    #     examinee.permissions.add(can_change_given_answer)
+    #     weired_group = Group.objects.create(name="Weired group made in 2023!!")
+    #     weired_group.delete()

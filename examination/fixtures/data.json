@@ -10,7 +10,7 @@
             "alt_answer1": "There is a strong culture within this group and a strong understanding with the teams owing to the preparation achieved over the last year and beyond. While it is the referees who will get the recognition for the appointments, this is a team game. We have an excellent team of referees, assistant referees and TMOs with a strong team ethic for the group to be the best it can be as a whole",
             "alt_answer2": "They all would quietly decline to answer that whilst probably thinking no, it isn't. Their interests lie in their own jurisdiction where they set out to grow and further the game for the betterment of their national interests",
             "alt_answer3": "'Closing the gap' with tier one is an unattainable and near-impossible task when the tier one countries are advancing forward all the time with self-sustaining resources, financial and non-financial",
-            "valid": true,
+            "is_valid": true,
             "level": 1,
             "saving_time": "2023-10-12T06:06:27.584Z"
         }
@@ -26,7 +26,7 @@
             "alt_answer1": "Fiji's playing base is spread between France and Super Rugby Pacific. The players are exposed to a high level of competition and they produce natural athletes. They are well supported at home. Fiji hosting the Rugby Championship teams would be a worthy blockbuster",
             "alt_answer2": "When there are no regulations in place to even the playing field, power will always accumulate with the few. That is human nature, it is present everywhere and you would have to heavily regulate and upend the international game to fight against it",
             "alt_answer3": "Ireland and France both went out in the quarter-finals last time and have powered through to become the top two men's sides in the world. This is backed by tangible results at junior and senior levels",
-            "valid": false,
+            "is_valid": false,
             "level": 2,
             "saving_time": "2023-10-12T08:29:12.893Z"
         }
@@ -42,7 +42,7 @@
             "alt_answer1": "Fossilized human footprints might be the oldest direct evidence that people lived in the Americas thousands of years earlier than thought — as early as 23,000 years ago",
             "alt_answer2": "The timeline is also supported by indirect evidence, such as pendants carved from animal remains, but the footprints in New Mexico are special because they were undoubtedly made by people",
             "alt_answer3": "Scientists in Poland are exploring the possibility of testing whether a woman has taken the abortion drugs mifepristone and misoprostol. The researchers say that their work is untainted by politics, but others worry that the technique could be used by prosecutors in Poland and other countries where abortion is, in most cases, illegal",
-            "valid": true,
+            "is_valid": true,
             "level": 3,
             "saving_time": "2023-10-12T06:12:44.978Z"
         }
@@ -58,7 +58,7 @@
             "alt_answer1": "We must be careful not to facilitate adaptations of the virus that make it more dangerous than it [already] is",
             "alt_answer2": "Large language models (LLMs), such as ChatGPT, could become regular assistants for writing manuscripts, peer-review reports and grant applications. These artificial-intelligence (AI) tools could change how scientists interrogate and summarize results, producing 'papers on demand' from experimental data and vastly expanding the scope of meta-analyses and reviews",
             "alt_answer3": "Public-awareness campaigns aimed at stopping behaviours that could bring people into contact with bat saliva can also help to prevent spillover of the virus",
-            "valid": true,
+            "is_valid": true,
             "level": 2,
             "saving_time": "2023-10-12T06:15:09.660Z"
         }
@@ -69,7 +69,7 @@
         "fields": {
             "module": 4,
             "text": "The pilot-in-command or, in the case of commercial air transport, the operator shall be responsible for thesatisfactory accomplishment of the pre-flight inspection. This inspection must be carried out by the pilotor another qualified person but need not be carried out by an approved maintenance organisation or byPart-66 certifying staff",
-            "valid": true,
+            "is_valid": true,
             "level": 1,
             "saving_time": "2023-10-12T06:16:21.902Z"
         }
@@ -80,7 +80,7 @@
         "fields": {
             "module": 2,
             "text": "This Section establishes the measures to be taken to ensure that airworthiness is maintained, including maintenance. It also specifies the conditions to be met by the persons or organisations involved in such continuingairworthiness management",
-            "valid": true,
+            "is_valid": true,
             "level": 2,
             "saving_time": "2023-10-12T06:16:41.455Z"
         }
@@ -91,7 +91,7 @@
         "fields": {
             "module": 3,
             "text": "By derogation from point 4(i), when the continuing airworthiness of an aircraft not used in commercial air transport is managed by a continuing airworthiness management organisation approved in accordance with Section A, Subpart G, of this Annex (Part-M) not subject to the oversight of the Member State of registry, and only if agreed with the Member State of registry prior to the approval of the maintenance programme",
-            "valid": false,
+            "is_valid": false,
             "level": 3,
             "saving_time": "2023-10-12T06:18:44.445Z"
         }
@@ -102,97 +102,105 @@
         "fields": {
             "module": 1,
             "text": "For level 1 findings, immediate action shall be taken by the competent authority to revoke, limit or suspend in whole or in part, depending upon the extent of the level 1 finding, the continuing airworthiness management organisation approval, until successful corrective action has been taken by the organization",
-            "valid": true,
+            "is_valid": true,
             "level": 2,
             "saving_time": "2023-10-12T06:18:39.272Z"
         }
     },
     {
-        "model": "examination.mcquestionusage",
+        "model": "examination.licencecategory",
         "pk": 1,
         "fields": {
-            "usage_date": "2023-08-28",
-            "question": 3
+            "code": "A",
+            "description": "Line Maintenance"
         }
     },
     {
-        "model": "examination.mcquestionusage",
+        "model": "examination.licencecategory",
         "pk": 2,
         "fields": {
-            "usage_date": "2023-09-05",
-            "question": 1
+            "code": "B1.1",
+            "description": "Base Maintenance Mechanical and Electrical"
         }
     },
     {
-        "model": "examination.mcquestionusage",
+        "model": "examination.licencecategory",
         "pk": 3,
         "fields": {
-            "usage_date": "2023-09-05",
-            "question": 1
+            "code": "B2",
+            "description": "Base Maintenance Avionic and Electrical"
         }
     },
     {
-        "model": "examination.essayquestionusage",
-        "pk": 1,
-        "fields": {
-            "usage_date": "2023-09-01",
-            "question": 2
-        }
-    },
-    {
-        "model": "examination.essayquestionusage",
-        "pk": 2,
-        "fields": {
-            "usage_date": "2023-09-14",
-            "question": 1
-        }
-    },
-    {
-        "model": "examination.essayquestionusage",
-        "pk": 3,
-        "fields": {
-            "usage_date": "2023-09-30",
-            "question": 1
-        }
-    },
-    {
-        "model": "examination.essayquestionusage",
+        "model": "examination.licencecategory",
         "pk": 4,
         "fields": {
-            "usage_date": "2023-09-18",
-            "question": 3
+            "code": "C",
+            "description": "Base Maintenance on Aircraft Entirety"
         }
     },
     {
-        "model": "examination.category",
-        "pk": 1,
+        "model": "examination.licencecategory",
+        "pk": 5,
         "fields": {
-            "category": "A",
-            "description": "line maintenance and simple defect rectification on tasks specifically endorsed"
+            "code": "A1",
+            "description": "Line Maintenance Aeroplanes Turbine"
         }
     },
     {
-        "model": "examination.category",
-        "pk": 2,
+        "model": "examination.licencecategory",
+        "pk": 6,
         "fields": {
-            "category": "B2",
-            "description": "maintenance avionic and electrical systems, simple tests within powerplant and mechanical systems,"
+            "code": "A2",
+            "description": "Line Maintenance Aeroplanes Piston"
         }
     },
     {
-        "model": "examination.category",
-        "pk": 3,
+        "model": "examination.licencecategory",
+        "pk": 7,
         "fields": {
-            "category": "C",
-            "description": "base maintenance on aircraft"
+            "code": "A3",
+            "description": "Line Maintenance Helicopters Turbine"
         }
     },
     {
-        "model": "examination.category",
-        "pk": 4,
+        "model": "examination.licencecategory",
+        "pk": 8,
         "fields": {
-            "category": "A4",
-            "description": "A on Helicopters Piston"
+            "code": "A4",
+            "description": "LIne Maintenance Helicopters Piston"
+        }
+    },
+    {
+        "model": "examination.licencecategory",
+        "pk": 9,
+        "fields": {
+            "code": "B1.1",
+            "description": "Base Maintenance Mechanical and Electrical Aeroplanes Turbine"
+        }
+    },
+    {
+        "model": "examination.licencecategory",
+        "pk": 10,
+        "fields": {
+            "code": "B1.2",
+            "description": "Base Maintenance Mechanical and Electrical Aeroplanes Piston"
+        }
+    },
+    {
+        "model": "examination.licencecategory",
+        "pk": 11,
+        "fields": {
+            "code": "B1.3",
+            "description": "Base Maintenance Mechanical and Electrical Helicopters Turbine"
+        }
+    },
+    {
+        "model": "examination.licencecategory",
+        "pk": 12,
+        "fields": {
+            "code": "B1.4",
+            "description": "Base Maintenance Mechanical and Electrical Helicopters Piston"
         }
     },
     {
@@ -202,7 +210,7 @@
             "model_answer": "The influence of statistician Calyampudi Radhakrishna Rao can be partly appreciated by perusing the many advances that carry his name: the Cramér-Rao inequality, used to estimate unknown parameters of a statistical population, such as the average blood-pressure reduction caused by a new drug",
             "key_points": "Calyampudi Radhakrishna Rao",
             "question": 2,
-            "category": [
+            "licence_category": [
                 1,
                 2
             ]
@@ -215,7 +223,7 @@
             "model_answer": "The prize changed our lives. It is the one scientific prize everyone knows. Suddenly you become a public figure being asked to do all sorts of things: to give lectures, quite often on topics you know little about",
             "key_points": "prize everyone knows",
             "question": 1,
-            "category": [
+            "licence_category": [
                 3
             ]
         }
@@ -227,7 +235,7 @@
             "model_answer": "Coming from Mr Sunak, such a proposal is hard to take as seriously as it deserves",
             "key_points": "Mr Sunak, proposal",
             "question": 3,
-            "category": [
+            "licence_category": [
                 2,
                 3
             ]
@@ -240,48 +248,92 @@
             "model_answer": "Although we can't know how such a transformation would have turned out, this was probably a mistake. The Cinderella status of vocational education, which boils down to snobbery, mars the school system now as is did then. Exams requiring too much pointless memorisation of information have proliferated under the Conservative",
             "key_points": "Cinderella status, Conservative, snobbery",
             "question": 4,
-            "category": [
+            "licence_category": [
                 1,
                 2,
-                3,
-                4
+                3
             ]
         }
     },
     {
-        "model": "examination.givenanswer",
+        "model": "examination.issuedexam",
         "pk": 1,
         "fields": {
-            "essay_ref": 2,
-            "model_answer": "a",
-            "key_points": "a",
-            "multichoice_ref": null,
-            "right_answer": "",
-            "alt_answer1": "",
-            "alt_answer2": "",
-            "alt_answer3": "",
+            "creation_time": "2023-10-17T17:13:21.777Z",
+            "handout_time": "2023-09-01T10:00:00Z",
+            "exam_identifier": "base exam 2023-01",
             "type": 1,
-            "given_answer": "aassddff",
-            "assignment_time": "2023-10-01T10:00:00Z",
-            "user": 1
+            "groupname": 1
         }
     },
     {
-        "model": "examination.givenanswer",
+        "model": "examination.issuedexam",
         "pk": 2,
         "fields": {
+            "creation_time": "2023-10-17T17:14:07.561Z",
+            "handout_time": "2023-09-15T10:00:00Z",
+            "exam_identifier": "type exam 2023-01",
+            "type": 1,
+            "groupname": 1
+        }
+    },
+    {
+        "model": "examination.issuedexam",
+        "pk": 3,
+        "fields": {
+            "creation_time": "2023-10-17T17:14:35.001Z",
+            "handout_time": "2023-10-22T04:00:00Z",
+            "exam_identifier": "base exam 2023-02",
+            "type": 2,
+            "groupname": 1
+        }
+    },
+    {
+        "model": "examination.selectedquestion",
+        "pk": 1,
+        "fields": {
+            "question": "The pilot-in-command or, in the case of commercial air transport, the operator shall be responsible for thesatisfactory accomplishment of the pre-flight inspection. This inspection must be carried out by the pilotor another qualified person but need not be carried out by an approved maintenance organisation or byPart-66 certifying staff",
+            "essay_ref": 2,
+            "model_answer": "The prize changed our lives. It is the one scientific prize everyone knows. Suddenly you become a public figure being asked to do all sorts of things: to give lectures, quite often on topics you know little about",
+            "key_points": "prize everyone knows",
+            "multichoice_ref": null,
+            "correct_answer": "",
+            "alt_answer1": "",
+            "alt_answer2": "",
+            "alt_answer3": "",
+            "issued_exam": 1
+        }
+    },
+    {
+        "model": "examination.selectedquestion",
+        "pk": 2,
+        "fields": {
+            "question": "No component may be fitted unless it is in a satisfactory condition, has been appropriately released toservice on an EASA Form 1 or equivalent and is marked in accordance with Annex I (Part-21), Subpart Q,unless otherwise specified in Annex I (Part-21) to Regulation (EU) No 748/2012, Annex II (Part-145) orSubpart F, Section A of Annex I to this Regulation",
             "essay_ref": null,
             "model_answer": "",
             "key_points": "",
-            "multichoice_ref": 2,
-            "right_answer": "a",
-            "alt_answer1": "a",
-            "alt_answer2": "a",
-            "alt_answer3": "a",
-            "type": 2,
-            "given_answer": "cvbn",
-            "assignment_time": "2023-09-29T08:30:06Z",
-            "user": 1
+            "multichoice_ref": 4,
+            "correct_answer": "Material being either raw material or consumable material shall only be used on an aircraft or a component when the aircraft or component manufacturer states so in relevant maintenance data or as specified in Annex II (Part-145). Such material shall only be used when the material meets the required specification and has appropriate traceability. All material must be accompanied by documentation clearly relating to the particular material and containing a conformity to specification statement plus both the manufacturing and supplier source",
+            "alt_answer1": "We must be careful not to facilitate adaptations of the virus that make it more dangerous than it [already] is",
+            "alt_answer2": "Large language models (LLMs), such as ChatGPT, could become regular assistants for writing manuscripts, peer-review reports and grant applications. These artificial-intelligence (AI) tools could change how scientists interrogate and summarize results, producing 'papers on demand' from experimental data and vastly expanding the scope of meta-analyses and reviews",
+            "alt_answer3": "Public-awareness campaigns aimed at stopping behaviours that could bring people into contact with bat saliva can also help to prevent spillover of the virus",
+            "issued_exam": 2
+        }
+    },
+    {
+        "model": "examination.selectedquestion",
+        "pk": 3,
+        "fields": {
+            "question": "By derogation from point 4(i), when the continuing airworthiness of an aircraft not used in commercial air transport is managed by a continuing airworthiness management organisation approved in accordance with Section A, Subpart G, of this Annex (Part-M) not subject to the oversight of the Member State of registry, and only if agreed with the Member State of registry prior to the approval of the maintenance programme",
+            "essay_ref": 3,
+            "model_answer": "Coming from Mr Sunak, such a proposal is hard to take as seriously as it deserves",
+            "key_points": "Mr Sunak, proposal",
+            "multichoice_ref": null,
+            "correct_answer": "",
+            "alt_answer1": "",
+            "alt_answer2": "",
+            "alt_answer3": "",
+            "issued_exam": 3
         }
     },
     {
@@ -290,11 +342,10 @@
         "fields": {
             "code": "6",
             "description": "Materials and hardware",
-            "category": [
+            "licence_category": [
                 1,
                 2,
-                3,
-                4
+                3
             ]
         }
     },
@@ -304,11 +355,10 @@
         "fields": {
             "code": "10",
             "description": "Aviation legislation",
-            "category": [
+            "licence_category": [
                 1,
                 2,
-                3,
-                4
+                3
             ]
         }
     },
@@ -318,11 +368,10 @@
         "fields": {
             "code": "2",
             "description": "Physics",
-            "category": [
+            "licence_category": [
                 1,
                 2,
-                3,
-                4
+                3
             ]
         }
     },
@@ -332,9 +381,44 @@
         "fields": {
             "code": "17A",
             "description": "Propeller",
-            "category": [
+            "licence_category": [
                 1
             ]
+        }
+    },
+    {
+        "model": "examination.chaptergroup",
+        "pk": 1,
+        "fields": {
+            "name": "Introduction module"
+        }
+    },
+    {
+        "model": "examination.chaptergroup",
+        "pk": 2,
+        "fields": {
+            "name": "Helicopters"
+        }
+    },
+    {
+        "model": "examination.chaptergroup",
+        "pk": 3,
+        "fields": {
+            "name": "Airframe structures"
+        }
+    },
+    {
+        "model": "examination.chaptergroup",
+        "pk": 4,
+        "fields": {
+            "name": "Airframe systems"
+        }
+    },
+    {
+        "model": "examination.chaptergroup",
+        "pk": 5,
+        "fields": {
+            "name": "Turbine Engine"
         }
     },
     {
@@ -342,7 +426,8 @@
         "pk": 1,
         "fields": {
             "code": "75",
-            "description": "Turbine engines: air"
+            "description": "Air",
+            "group_name": 5
         }
     },
     {
@@ -350,7 +435,8 @@
         "pk": 2,
         "fields": {
             "code": "21A",
-            "description": "Airframe systems: air supply"
+            "description": "Air Supply",
+            "group_name": 3
         }
     },
     {
@@ -358,7 +444,8 @@
         "pk": 3,
         "fields": {
             "code": "62",
-            "description": "Helicopters: rotors"
+            "description": "Rotors",
+            "group_name": 2
         }
     }
 ]

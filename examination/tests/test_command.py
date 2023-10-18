@@ -64,3 +64,17 @@ class TestCreateuser:
             call_command(
                 "createuser", group, permission, user, email, password, stdout=out
             )
+
+    # def test_users(self):
+    #     from django.contrib.auth.models import Group, Permission, User
+    #     from django.contrib.contenttypes.models import ContentType
+    #     from examination.models import GivenAnswer
+    #     users = [item.username for item in User.objects.all()]
+    #     groups = [item.name for item in Group.objects.all()]
+    #     ct = ContentType.objects.get_for_model(GivenAnswer)
+    #     p = Permission.objects.filter(content_type=ct)
+    #     p = Permission.objects.filter(name="Can change given answer")
+
+    #     assert groups is None
+
+    #     assert users is None

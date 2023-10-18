@@ -14,6 +14,6 @@ urlpatterns = [
     path(
         "form_mcquestions/<int:pk>/",
         views.MCQuestionFormView.as_view(),
-        name="mcquestion_form",
+        name="form_mcquest",
     ),
 ]

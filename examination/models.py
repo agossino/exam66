@@ -1,17 +1,16 @@
 from django.db import models
 from django.db.models.query import QuerySet
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group
 from django.urls import reverse
-from django.utils.timezone import now
 
 
 class ValidManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super(ValidManager, self).get_queryset().filter(valid=True)
+        return super(ValidManager, self).get_queryset().filter(is_valid=True)
 
 
 LEVEL = ((1, "1"), (2, "2"), (3, "3"))
-ANSWER_TYPE = ((1, "Online"), (2, "Printed"))
+EXAMINATION_TYPE = ((1, "Online"), (2, "Printout"))
 
 
 class MultichoiceQuestion(models.Model):
@@ -33,11 +32,11 @@ class MultichoiceQuestion(models.Model):
         blank=True,
         null=True,
     )
-    answer = models.TextField("The right answer")
+    answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
     alt_answer2 = models.TextField("The second wrong alternatate answer")
     alt_answer3 = models.TextField("The third wrong alternate answer")
-    valid = models.BooleanField("Question validity", default=True)
+    is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
     saving_time = models.DateTimeField("Saving date", auto_now=True)
 
@@ -54,7 +53,7 @@ class MultichoiceQuestion(models.Model):
         ]
 
     def __str__(self) -> str:
-        return self.text
+        return f"Multichoice Question: {self.text}"
 
 
 class EssayQuestion(models.Model):
@@ -64,147 +63,186 @@ class EssayQuestion(models.Model):
     module = models.ForeignKey(
         "SubjectModule",
         verbose_name="The module this question belongs to",
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
-    text = models.TextField()
-    valid = models.BooleanField(default=True)
-    level = models.IntegerField(choices=LEVEL)
-    saving_time = models.DateTimeField(auto_now=True)
+    text = models.TextField("Question text")
+    is_valid = models.BooleanField("Question validity", default=True)
+    level = models.IntegerField("Training level", choices=LEVEL)
+    saving_time = models.DateTimeField("Saving date", auto_now=True)
 
     class Meta:
         ordering = ("module", "saving_time")
 
     def __str__(self) -> str:
-        return self.text
+        return f"Essay Question: {self.text}"
 
 
-class MCQuestionUsage(models.Model):
-    usage_date = models.DateField(
-        "The date the multichoice question has been used", default=now
-    )
-    question = models.ForeignKey(MultichoiceQuestion, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Question {self.question.id} used on {self.usage_date}"
-
-
-class EssayQuestionUsage(models.Model):
-    usage_date = models.DateField(
-        "The date the essay question has been used", default=now
-    )
-    question = models.ForeignKey(EssayQuestion, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"Question {self.question.id} used on {self.usage_date}"
-
-
-class Category(models.Model):
-    category = models.CharField("Licence category and subcategory", max_length=5)
+class LicenceCategory(models.Model):
+    code = models.CharField("Licence category and subcategory code", max_length=5)
     description = models.CharField(max_length=150, default="")
 
     def __str__(self) -> str:
-        return self.category
+        return f"Licence Category: {self.code}"
 
     class Meta:
-        verbose_name_plural = "Categories"
+        verbose_name_plural = "LicenceCategories"
 
 
 class EssayAnswer(models.Model):
     model_answer = models.TextField("Essay model answer")
     key_points = models.CharField("Answer key points", max_length=150)
-    question = models.ForeignKey(EssayQuestion, on_delete=models.CASCADE)
-    category = models.ManyToManyField(Category)
+    question = models.ForeignKey(
+        EssayQuestion,
+        verbose_name="The answer this question responds to",
+        on_delete=models.CASCADE,
+    )
+    licence_category = models.ManyToManyField(
+        LicenceCategory,
+        verbose_name="Licence category and subcategory this question belongs to",
+    )
 
     def __str__(self) -> str:
-        return f"Question {self.question.id}; {self.model_answer[:25]}"
+        return f"Answer: {self.model_answer}; to Question Essay: {self.question.id}"
 
 
-class GivenAnswer(models.Model):
+class IssuedExam(models.Model):
+    creation_time = models.DateTimeField("Creation datetime", auto_now_add=True)
+    handout_time = models.DateTimeField("The datetime exam is handed out", null=True)
+    exam_identifier = models.CharField(
+        "The name used to uniquely identify the examination", unique=True
+    )
+    type = models.IntegerField(
+        "The way this examination is given", choices=EXAMINATION_TYPE, null=True
+    )
+    groupname = models.ForeignKey(
+        Group,
+        verbose_name="The group with the permission to take this exam",
+        on_delete=models.SET_NULL,
+        null=True,
+        max_length=150,
+    )
+
+    def __str__(self) -> str:
+        return f"Issued Exam: {self.exam_identifier}"
+
+
+class SelectedQuestion(models.Model):
+    question = models.TextField("Question text", editable=False, default="")
+
+    # This instance can refers to an essay question/answer, exclusive or ...
     essay_ref = models.ForeignKey(
-        EssayAnswer, on_delete=models.SET_NULL, blank=True, null=True
+        EssayAnswer,
+        verbose_name="The essay question/answer this given answer refers to",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
     model_answer = models.TextField("Essay model answer", blank=True)
-    key_points = models.CharField("Answer key points", max_length=150, blank=True)
-
+    key_points = models.CharField("Essay Answer key points", max_length=150, blank=True)
+    # ... can refers to a multichoice question
     multichoice_ref = models.ForeignKey(
-        MultichoiceQuestion, on_delete=models.SET_NULL, blank=True, null=True
+        MultichoiceQuestion,
+        verbose_name="The multichoice question this given answer refers to",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
     )
-    right_answer = models.TextField("The right answer", blank=True)
-    alt_answer1 = models.TextField("The first wrong alternate answer", blank=True)
-    alt_answer2 = models.TextField("The second wrong alternatate answer", blank=True)
-    alt_answer3 = models.TextField("The third wrong alternate answer", blank=True)
+    correct_answer = models.TextField("Multichoice correct answer", blank=True)
+    alt_answer1 = models.TextField(
+        "Multichoice first wrong alternate answer", blank=True
+    )
+    alt_answer2 = models.TextField(
+        "Multichoice second wrong alternatate answer", blank=True
+    )
+    alt_answer3 = models.TextField(
+        "Multichoice third wrong alternate answer", blank=True
+    )
 
-    type = models.IntegerField(choices=ANSWER_TYPE)
-    given_answer = models.TextField("The answer given by user")
-    assignment_time = models.DateTimeField(null=True, blank=True)
-    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    issued_exam = models.ForeignKey(
+        IssuedExam,
+        verbose_name="The examination this given answer belongs to",
+        on_delete=models.PROTECT,
+        null=True,
+    )
+    # da spostare in tabella GivenAnswer (questa diventa CheckAnswer)
+    # is_correct = models.BooleanField("Is the given answer correct?", null=True)
+    # given_answer = models.TextField("The answer given by the examinee", blank=True)
+    # # assignment_time is when examinee gives the answer in case of online examination; for printout examination TBD
+    # assignment_time = models.DateTimeField(
+    #     "The time this answer is given", null=True, blank=True
+    # )
+    # username = models.ForeignKey(
+    #     User,
+    #     verbose_name="Examinee who takes the exam",
+    #     on_delete=models.PROTECT,
+    #     null=True,
+    # )
+
+    def save(self, *args, **kwargs):
+        if self.essay_ref is None:
+            self.question = self.multichoice_ref.text
+            self.correct_answer = self.multichoice_ref.answer
+            self.alt_answer1 = self.multichoice_ref.alt_answer1
+            self.alt_answer2 = self.multichoice_ref.alt_answer2
+            self.alt_answer3 = self.multichoice_ref.alt_answer3
+        else:
+            self.question = self.essay_ref.question.text
+            self.model_answer = self.essay_ref.model_answer
+            self.key_points = self.essay_ref.key_points
+        super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ("user", "assignment_time")
+        ordering = ("issued_exam",)
         constraints = [
             models.CheckConstraint(
-                check=~models.Q(essay_ref__isnull=True)
-                & ~models.Q(model_answer__exact="")
-                & ~models.Q(key_points__exact="")
-                | models.Q(essay_ref__isnull=True)
-                & models.Q(model_answer__exact="")
-                & models.Q(key_points__exact=""),
-                name="in essay set: all fields to be filled in or none",
-            ),
-            models.CheckConstraint(
-                check=~models.Q(multichoice_ref__isnull=True)
-                & ~models.Q(right_answer__exact="")
-                & ~models.Q(alt_answer1__exact="")
-                & ~models.Q(alt_answer2__exact="")
-                & ~models.Q(alt_answer3__exact="")
-                | models.Q(multichoice_ref__isnull=True)
-                & models.Q(right_answer__exact="")
-                & models.Q(alt_answer1__exact="")
-                & models.Q(alt_answer2__exact="")
-                & models.Q(alt_answer3__exact=""),
-                name="in multichoice set: all fields to be filled in or none",
-            ),
-            models.CheckConstraint(
-                check=~models.Q(essay_ref__isnull=True)
-                & ~models.Q(model_answer__exact="")
-                & ~models.Q(key_points__exact="")
-                ^ ~models.Q(multichoice_ref__isnull=True)
-                & ~models.Q(right_answer__exact="")
-                & ~models.Q(alt_answer1__exact="")
-                & ~models.Q(alt_answer2__exact="")
-                & ~models.Q(alt_answer3__exact=""),
-                name="fill in only one set between essay multichoice sets",
+                check=models.Q(essay_ref__isnull=True)
+                ^ models.Q(multichoice_ref__isnull=True),
+                name="It must refer to an Essay Question exclusive or a Multichoice Question",
             ),
         ]
 
     def __str__(self):
-        if self.essay_ref is None:
-            question = self.multichoice_ref.text
-        else:
-            question = self.essay_ref.question.text
-        return f"""User: {self.user};
-question: {question};
-given answer: {self.given_answer}"""
+        return f"Selected Question: {self.question}"
 
 
 class SubjectModule(models.Model):
-    code = models.CharField("Alphanumeric code", max_length=5)
-    description = models.CharField(max_length=150)
-    category = models.ManyToManyField(Category)
+    code = models.CharField("Subject Module alphanumeric code", max_length=5)
+    description = models.CharField("Subject Module description", max_length=150)
+    licence_category = models.ManyToManyField(
+        LicenceCategory,
+        verbose_name="Licence category and subcategory this module refers to",
+    )
 
     class Meta:
         ordering = ("code",)
 
     def __str__(self):
-        return f"Module {self.code} {self.description}"
+        return f"Subject Module: {self.code} {self.description}"
+
+
+class ChapterGroup(models.Model):
+    name = models.CharField(
+        "The name of the group, which consists of many Chapters", max_length=300
+    )
+
+    def __str__(self) -> str:
+        return f"Chapter Group: {self.name}"
 
 
 class Chapter(models.Model):
-    code = models.CharField("Alphanumeric code", max_length=5)
-    description = models.CharField(max_length=150)
+    code = models.CharField("Chapter alphanumeric code", max_length=5)
+    description = models.CharField("Chapter description", max_length=300)
+    group_name = models.ForeignKey(
+        ChapterGroup,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name="The name of the group, which consists of many Chapters",
+    )
 
     class Meta:
         ordering = ("code",)
 
     def __str__(self):
-        return f"Module {self.code} {self.description}"
+        return f"Chapter: {self.description}{self.code}"
