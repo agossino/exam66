@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib import admin
 
 from .models import (
@@ -17,13 +18,20 @@ admin.site.register(
         EssayQuestion,
         IssuedExam,
         SelectedQuestion,
-        LicenceCategory,
         EssayAnswer,
         SubjectModule,
         ChapterGroup,
         Chapter,
     ]
 )
+
+class LicenceCategoryForm(forms.ModelForm):
+    class Meta:
+        widgets = {'description': forms.TextInput(attrs={'size':'100'})}
+
+@admin.register(LicenceCategory)
+class LicenceCategoryAdmin(admin.ModelAdmin):
+    form = LicenceCategoryForm
 
 
 @admin.register(MultichoiceQuestion)

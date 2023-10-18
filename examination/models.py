@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models.query import QuerySet
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.urls import reverse
 
 
@@ -38,7 +38,7 @@ class MultichoiceQuestion(models.Model):
     alt_answer3 = models.TextField("The third wrong alternate answer")
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
-    saving_time = models.DateTimeField("Saving date", auto_now=True)
+    saving_time = models.DateTimeField("Saving time", auto_now=True)
 
     def get_absolute_url(self):
         return reverse("detail_mcquest", args=[self.id])
@@ -70,7 +70,7 @@ class EssayQuestion(models.Model):
     text = models.TextField("Question text")
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
-    saving_time = models.DateTimeField("Saving date", auto_now=True)
+    saving_time = models.DateTimeField("Saving time", auto_now=True)
 
     class Meta:
         ordering = ("module", "saving_time")
@@ -108,8 +108,8 @@ class EssayAnswer(models.Model):
 
 
 class IssuedExam(models.Model):
-    creation_time = models.DateTimeField("Creation datetime", auto_now_add=True)
-    handout_time = models.DateTimeField("The datetime exam is handed out", null=True)
+    creation_time = models.DateTimeField("Creation time", auto_now_add=True)
+    handout_time = models.DateTimeField("The time exam is handed out", null=True)
     exam_identifier = models.CharField(
         "The name used to uniquely identify the examination", unique=True
     )
@@ -166,19 +166,6 @@ class SelectedQuestion(models.Model):
         on_delete=models.PROTECT,
         null=True,
     )
-    # da spostare in tabella GivenAnswer (questa diventa CheckAnswer)
-    # is_correct = models.BooleanField("Is the given answer correct?", null=True)
-    # given_answer = models.TextField("The answer given by the examinee", blank=True)
-    # # assignment_time is when examinee gives the answer in case of online examination; for printout examination TBD
-    # assignment_time = models.DateTimeField(
-    #     "The time this answer is given", null=True, blank=True
-    # )
-    # username = models.ForeignKey(
-    #     User,
-    #     verbose_name="Examinee who takes the exam",
-    #     on_delete=models.PROTECT,
-    #     null=True,
-    # )
 
     def save(self, *args, **kwargs):
         if self.essay_ref is None:
@@ -205,6 +192,33 @@ class SelectedQuestion(models.Model):
 
     def __str__(self):
         return f"Selected Question: {self.question}"
+
+
+class GivenAnswer(models.Model):
+    answer = models.TextField("The answer given by the examinee", blank=True)
+    is_correct = models.BooleanField("Is the given answer correct?", null=True)
+    saving_time = models.DateTimeField("Saving time", auto_now=True)
+    creation_time = models.DateTimeField("Creation time", auto_now_add=True)
+    question = models.ForeignKey(
+        SelectedQuestion,
+        verbose_name="The question this answer respond to",
+        on_delete=models.PROTECT,
+    )
+    username = models.ForeignKey(
+        User,
+        verbose_name="Examinee who takes the exam",
+        on_delete=models.PROTECT,
+        null=True,
+    )
+
+    class Meta:
+        permissions = [
+            ("change_givenanswer_is_correct", "Can change given answer is_correct"),
+            ("view_givenanswer_is_correct", "Can view given answer is_correct"),
+        ]
+
+    def __str__(self):
+        return f"Given Answer: {self.answer} on {self.saving_time} by {self.username}"
 
 
 class SubjectModule(models.Model):
@@ -245,4 +259,4 @@ class Chapter(models.Model):
         ordering = ("code",)
 
     def __str__(self):
-        return f"Chapter: {self.description}{self.code}"
+        return f"Chapter: {self.code} {self.description}"

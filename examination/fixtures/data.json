@@ -337,6 +337,42 @@
         }
     },
     {
+        "model": "examination.givenanswer",
+        "pk": 1,
+        "fields": {
+            "answer": "An international team of scientists Thursday unveiled the most comprehensive map of the human brain ever completed. It provides long-sought-after clues about what makes us human and sets a critical foundation for understanding and eventually treating brain-related conditions",
+            "is_correct": true,
+            "saving_time": "2023-10-22T04:00:00Z",
+            "creation_time": "2023-10-20T14:00:00Z",
+            "question": 1,
+            "username": 1
+        }
+    },
+    {
+        "model": "examination.givenanswer",
+        "pk": 2,
+        "fields": {
+            "answer": "Research on psychopathy has progressed considerably in recent years against the backdrop of important advances in the broader field of clinical psychological science",
+            "is_correct": null,
+            "saving_time": "2023-10-22T04:00:00Z",
+            "creation_time": "2023-10-20T14:00:00Z",
+            "question": 1,
+            "username": 1
+        }
+    },
+    {
+        "model": "examination.givenanswer",
+        "pk": 3,
+        "fields": {
+            "answer": "Filled with secrets from a therapist's toolkit, this is a must-have handbook for optimising your mental health. Dr Julie's simple but expert advice and powerful coping techniques will help you stay resilient no matter what life throws your way",
+            "is_correct": false,
+            "saving_time": "2023-10-22T04:00:00Z",
+            "creation_time": "2023-10-20T14:00:00Z",
+            "question": 1,
+            "username": 1
+        }
+    },
+    {
         "model": "examination.subjectmodule",
         "pk": 1,
         "fields": {
