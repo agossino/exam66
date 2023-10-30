@@ -14,7 +14,10 @@ from .models import IssuedExam, MultichoiceQuestion, SelectedQuestion
 from .forms import EssayAnswerForm
 from .utils import user_get_401_or_none
 
-
+# TODO Multichoice questions in basic examination stardard have a
+# time allowed of 75 seconds per question. Essay question 20 minutes (1200 s).
+# Multichoice questions in Aircraft Type Training examination stardard have
+# a time allowed of 90 seconds per question.
 SECONDS_PER_MULTICHOIICE_QUESTION = 75
 SECONDS_PER_ESSAY_QUESTION = 1200
 

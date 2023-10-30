@@ -189,6 +189,14 @@ class SelectedQuestion(models.Model):
 
     class Meta:
         ordering = ("issued_exam",)
+        # TODO
+        # constraints = [
+        #     models.CheckConstraint(
+        #         check=models.Q(essay_ref__isnull=True)
+        #         ^ models.Q(multichoice_ref__isnull=True),
+        #         name="Refer to an Essay Question xor a Multichoice Question",
+        #     ),
+        # ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(essay_ref__isnull=True)
