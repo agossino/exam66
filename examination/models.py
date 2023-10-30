@@ -35,6 +35,7 @@ class MultichoiceQuestion(models.Model):
     answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
     alt_answer2 = models.TextField("The second wrong alternatate answer")
+    # TODO alt_answer3 to be deleted
     alt_answer3 = models.TextField("The third wrong alternate answer")
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
@@ -79,6 +80,7 @@ class EssayQuestion(models.Model):
         return f"Essay Question: {self.text}"
 
 
+# TODO code = models.CharField("Licence category and subcategory code", unique=True, max_length=5)
 class LicenceCategory(models.Model):
     code = models.CharField("Licence category and subcategory code", max_length=5)
     description = models.CharField(max_length=150, default="")
@@ -110,6 +112,10 @@ class EssayAnswer(models.Model):
 class IssuedExam(models.Model):
     creation_time = models.DateTimeField("Creation time", auto_now_add=True)
     handout_time = models.DateTimeField("The time exam is handed out", null=True)
+    # TODO
+    # exam_tag = models.CharField(
+    #     "The name used to uniquely identify the examination", unique=True
+    # )
     exam_identifier = models.CharField(
         "The name used to uniquely identify the examination", unique=True
     )
@@ -156,6 +162,7 @@ class SelectedQuestion(models.Model):
     alt_answer2 = models.TextField(
         "Multichoice second wrong alternatate answer", blank=True
     )
+    # TODO alt_answer3 to be deleted
     alt_answer3 = models.TextField(
         "Multichoice third wrong alternate answer", blank=True
     )

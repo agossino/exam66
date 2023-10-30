@@ -1,80 +1,158 @@
 from io import StringIO
+import os
+
+
+from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.core.management.base import CommandError
+from django.db import transaction
 
 import pytest
 
 
 @pytest.mark.django_db
 def test_users():
-    from django.contrib.auth.models import User
-
     users = User.objects.all()
 
     users_list = [user.username for user in users]
 
-    assert users_list == ["examiner0"]
+    assert users_list == ["user1", "user2", "user3", "examiner", "not_authorized"]
+
+
+@pytest.mark.skipif(
+    os.environ.get("DROPDB") is None, reason="Run only for dumping test database"
+)
+@pytest.mark.django_db
+def test_dumpdb():
+    ago = User.objects.create_superuser(username="ago", password="pw")
+    print(ago)
+    call_command("dumpdata", "--all", "-o", "examination/fixtures/test_db_dump.json")
+
+    assert ago.check_password(r"pw")
 
 
 @pytest.mark.django_db
 class TestCreateuser:
     def test_user_created(self):
+        user = "new_user"
+        password = "pw"
+        email = "user@sciara.com"
         group = "new_group"
         permission = "view_essayquestion"
-        user = "new_user"
-        email = "user@sciara.com"
-        password = "pw"
         out = StringIO()
-        call_command("createuser", group, permission, user, email, password, stdout=out)
+        call_command(
+            "createuser",
+            user,
+            password,
+            email,
+            group=group,
+            permission=permission,
+            stdout=out,
+        )
+
+        assert f"{user} created" in out.getvalue()
+        assert user in str(User.objects.all())
+
+    def test_existing_user(self):
+        user = "new_user"
+        password = "pw"
+        email = "user@sciara.com"
+        out = StringIO()
+        call_command(
+            "createuser",
+            user,
+            password,
+            email,
+            stdout=out,
+        )
+
+        with transaction.atomic():
+            with pytest.raises(CommandError):
+                call_command(
+                    "createuser",
+                    user,
+                    password,
+                    email,
+                    stdout=out,
+                )
+        assert user in str(User.objects.all())
+
+    def test_user_without_permission_created(self):
+        user = "new_user"
+        password = "pw"
+        email = "user@sciara.com"
+        group = "new_group"
+        out = StringIO()
+        call_command("createuser", user, password, email, group=group, stdout=out)
+
+        assert f"{user} created" in out.getvalue()
+        assert user in str(User.objects.all())
+
+    def test_user_without_group_created(self):
+        user = "new_user"
+        password = "pw"
+        email = "user@sciara.com"
+        out = StringIO()
+        call_command("createuser", user, password, email, stdout=out)
+
+        assert f"{user} created" in out.getvalue()
+        assert user in str(User.objects.all())
+
+    def test_wrong_permission(self):
+        user = "new_user"
+        password = "pw"
+        email = "user@sciara.com"
+        group = "new_group"
+        permission = "wrong_permission"
+        out = StringIO()
+        with pytest.raises(CommandError):
+            call_command(
+                "createuser",
+                user,
+                password,
+                email,
+                group=group,
+                permission=permission,
+                stdout=out,
+            )
+
+    def test_existing_group(self):
+        user = "new_user_1"
+        password = "pw"
+        email = "user@sciara.com"
+        group = "new_group"
+        out = StringIO()
+        call_command("createuser", user, password, email, group=group, stdout=out)
+        user = "new_user_2"
+        call_command("createuser", user, password, email, group=group, stdout=out)
 
         assert f"{user} created" in out.getvalue()
 
-    def test_wrong_permission(self):
-        group = "new_group"
-        permission = "wrong_permission"
+    def test_group_existing_with_permission(self):
         user = "new_user"
-        email = "user@sciara.com"
         password = "pw"
-        out = StringIO()
-        with pytest.raises(CommandError):
-            call_command(
-                "createuser", group, permission, user, email, password, stdout=out
-            )
-
-    def test_group_already_exists(self):
-        group = "examiners"
-        permission = "view_essayquestion"
-        user = "new_user"
         email = "user@sciara.com"
-        password = "pw"
-        out = StringIO()
-        with pytest.raises(CommandError):
-            call_command(
-                "createuser", group, permission, user, email, password, stdout=out
-            )
-
-    def test_user_already_exists(self):
         group = "new_group"
         permission = "view_essayquestion"
-        user = "examiner0"
-        email = "user@sciara.com"
-        password = "pw"
         out = StringIO()
-        with pytest.raises(CommandError):
-            call_command(
-                "createuser", group, permission, user, email, password, stdout=out
-            )
+        call_command(
+            "createuser",
+            user,
+            password,
+            email,
+            group=group,
+            permission=permission,
+            stdout=out,
+        )
+        user = "new_user_2"
+        call_command(
+            "createuser",
+            user,
+            password,
+            email,
+            group=group,
+            permission=permission,
+            stdout=out,
+        )
 
-    # def test_users(self):
-    #     from django.contrib.auth.models import Group, Permission, User
-    #     from django.contrib.contenttypes.models import ContentType
-    #     from examination.models import GivenAnswer
-    #     users = [item.username for item in User.objects.all()]
-    #     groups = [item.name for item in Group.objects.all()]
-    #     ct = ContentType.objects.get_for_model(GivenAnswer)
-    #     p = Permission.objects.filter(content_type=ct)
-    #     p = Permission.objects.filter(name="Can change given answer")
-
-    #     assert groups is None
-
-    #     assert users is None
+        assert f"{user} created" in out.getvalue()

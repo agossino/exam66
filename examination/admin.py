@@ -11,6 +11,7 @@ from .models import (
     SubjectModule,
     ChapterGroup,
     Chapter,
+    GivenAnswer,
 )
 
 admin.site.register(
@@ -22,12 +23,15 @@ admin.site.register(
         SubjectModule,
         ChapterGroup,
         Chapter,
+        GivenAnswer,
     ]
 )
 
+
 class LicenceCategoryForm(forms.ModelForm):
     class Meta:
-        widgets = {'description': forms.TextInput(attrs={'size':'100'})}
+        widgets = {"description": forms.TextInput(attrs={"size": "100"})}
+
 
 @admin.register(LicenceCategory)
 class LicenceCategoryAdmin(admin.ModelAdmin):

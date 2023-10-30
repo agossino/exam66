@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+<p>Ciao</p>
+<p>Examination: {{ object.exam_identifier }}</p>
+<p>current_question_index {{ current_question_list_index }}</p>
+<p>last_question_index {{ last_question_list_index }}</p>
+<p>Question: {{ current_question }}</p>
+
+<form action="{% url 'taking_exam' current_issued_exam %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Submit">
+</form>
+
+<p>
+{% if current_question_list_index > 0 %}
+<form action="{% url 'exam_progress' current_issued_exam 'prev' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Previous">
+</form>
+{% endif %}
+
+
+{% if current_question_list_index < last_question_list_index %}
+<form action="{% url 'exam_progress' current_issued_exam 'next' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Next">
+</form>
+{% endif %}
+</p>
+
+{% endblock content_block %}

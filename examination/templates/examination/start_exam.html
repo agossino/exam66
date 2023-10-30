@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content_block %}
+{{ issued_exam }}
+{% if questions_count > 0 %}
+    <p>Are you ready to take answer?</p>
+    <p>This exam has {{ questions_count}} questions to be answered in {{ time_allowed }} minute{{ time_allowed|pluralize }}</p>
+    <form action="{% url 'taking_exam' issued_exam.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Yes">
+    </form>
+{% else %}
+    <p>There is no questions for you</p>
+{% endif %}
+{% endblock content_block %}

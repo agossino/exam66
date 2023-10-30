@@ -108,6 +108,58 @@
         }
     },
     {
+        "model": "examination.essayanswer",
+        "pk": 1,
+        "fields": {
+            "model_answer": "The influence of statistician Calyampudi Radhakrishna Rao can be partly appreciated by perusing the many advances that carry his name: the Cramér-Rao inequality, used to estimate unknown parameters of a statistical population, such as the average blood-pressure reduction caused by a new drug",
+            "key_points": "Calyampudi Radhakrishna Rao",
+            "question": 2,
+            "licence_category": [
+                1,
+                2
+            ]
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 2,
+        "fields": {
+            "model_answer": "The prize changed our lives. It is the one scientific prize everyone knows. Suddenly you become a public figure being asked to do all sorts of things: to give lectures, quite often on topics you know little about",
+            "key_points": "prize everyone knows",
+            "question": 1,
+            "licence_category": [
+                3
+            ]
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 3,
+        "fields": {
+            "model_answer": "Coming from Mr Sunak, such a proposal is hard to take as seriously as it deserves",
+            "key_points": "Mr Sunak, proposal",
+            "question": 3,
+            "licence_category": [
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "examination.essayanswer",
+        "pk": 4,
+        "fields": {
+            "model_answer": "Although we can't know how such a transformation would have turned out, this was probably a mistake. The Cinderella status of vocational education, which boils down to snobbery, mars the school system now as is did then. Exams requiring too much pointless memorisation of information have proliferated under the Conservative",
+            "key_points": "Cinderella status, Conservative, snobbery",
+            "question": 4,
+            "licence_category": [
+                1,
+                2,
+                3
+            ]
+        }
+    },
+    {
         "model": "examination.licencecategory",
         "pk": 1,
         "fields": {
@@ -119,8 +171,8 @@
         "model": "examination.licencecategory",
         "pk": 2,
         "fields": {
-            "code": "B1.1",
-            "description": "Base Maintenance Mechanical and Electrical"
+            "code": "B1",
+            "description": "Base Maintenance Mechanical and Electrical Aeroplanes Turbine"
         }
     },
     {
@@ -201,175 +253,6 @@
         "fields": {
             "code": "B1.4",
             "description": "Base Maintenance Mechanical and Electrical Helicopters Piston"
-        }
-    },
-    {
-        "model": "examination.essayanswer",
-        "pk": 1,
-        "fields": {
-            "model_answer": "The influence of statistician Calyampudi Radhakrishna Rao can be partly appreciated by perusing the many advances that carry his name: the Cramér-Rao inequality, used to estimate unknown parameters of a statistical population, such as the average blood-pressure reduction caused by a new drug",
-            "key_points": "Calyampudi Radhakrishna Rao",
-            "question": 2,
-            "licence_category": [
-                1,
-                2
-            ]
-        }
-    },
-    {
-        "model": "examination.essayanswer",
-        "pk": 2,
-        "fields": {
-            "model_answer": "The prize changed our lives. It is the one scientific prize everyone knows. Suddenly you become a public figure being asked to do all sorts of things: to give lectures, quite often on topics you know little about",
-            "key_points": "prize everyone knows",
-            "question": 1,
-            "licence_category": [
-                3
-            ]
-        }
-    },
-    {
-        "model": "examination.essayanswer",
-        "pk": 3,
-        "fields": {
-            "model_answer": "Coming from Mr Sunak, such a proposal is hard to take as seriously as it deserves",
-            "key_points": "Mr Sunak, proposal",
-            "question": 3,
-            "licence_category": [
-                2,
-                3
-            ]
-        }
-    },
-    {
-        "model": "examination.essayanswer",
-        "pk": 4,
-        "fields": {
-            "model_answer": "Although we can't know how such a transformation would have turned out, this was probably a mistake. The Cinderella status of vocational education, which boils down to snobbery, mars the school system now as is did then. Exams requiring too much pointless memorisation of information have proliferated under the Conservative",
-            "key_points": "Cinderella status, Conservative, snobbery",
-            "question": 4,
-            "licence_category": [
-                1,
-                2,
-                3
-            ]
-        }
-    },
-    {
-        "model": "examination.issuedexam",
-        "pk": 1,
-        "fields": {
-            "creation_time": "2023-10-17T17:13:21.777Z",
-            "handout_time": "2023-09-01T10:00:00Z",
-            "exam_identifier": "base exam 2023-01",
-            "type": 1,
-            "groupname": 1
-        }
-    },
-    {
-        "model": "examination.issuedexam",
-        "pk": 2,
-        "fields": {
-            "creation_time": "2023-10-17T17:14:07.561Z",
-            "handout_time": "2023-09-15T10:00:00Z",
-            "exam_identifier": "type exam 2023-01",
-            "type": 1,
-            "groupname": 1
-        }
-    },
-    {
-        "model": "examination.issuedexam",
-        "pk": 3,
-        "fields": {
-            "creation_time": "2023-10-17T17:14:35.001Z",
-            "handout_time": "2023-10-22T04:00:00Z",
-            "exam_identifier": "base exam 2023-02",
-            "type": 2,
-            "groupname": 1
-        }
-    },
-    {
-        "model": "examination.selectedquestion",
-        "pk": 1,
-        "fields": {
-            "question": "The pilot-in-command or, in the case of commercial air transport, the operator shall be responsible for thesatisfactory accomplishment of the pre-flight inspection. This inspection must be carried out by the pilotor another qualified person but need not be carried out by an approved maintenance organisation or byPart-66 certifying staff",
-            "essay_ref": 2,
-            "model_answer": "The prize changed our lives. It is the one scientific prize everyone knows. Suddenly you become a public figure being asked to do all sorts of things: to give lectures, quite often on topics you know little about",
-            "key_points": "prize everyone knows",
-            "multichoice_ref": null,
-            "correct_answer": "",
-            "alt_answer1": "",
-            "alt_answer2": "",
-            "alt_answer3": "",
-            "issued_exam": 1
-        }
-    },
-    {
-        "model": "examination.selectedquestion",
-        "pk": 2,
-        "fields": {
-            "question": "No component may be fitted unless it is in a satisfactory condition, has been appropriately released toservice on an EASA Form 1 or equivalent and is marked in accordance with Annex I (Part-21), Subpart Q,unless otherwise specified in Annex I (Part-21) to Regulation (EU) No 748/2012, Annex II (Part-145) orSubpart F, Section A of Annex I to this Regulation",
-            "essay_ref": null,
-            "model_answer": "",
-            "key_points": "",
-            "multichoice_ref": 4,
-            "correct_answer": "Material being either raw material or consumable material shall only be used on an aircraft or a component when the aircraft or component manufacturer states so in relevant maintenance data or as specified in Annex II (Part-145). Such material shall only be used when the material meets the required specification and has appropriate traceability. All material must be accompanied by documentation clearly relating to the particular material and containing a conformity to specification statement plus both the manufacturing and supplier source",
-            "alt_answer1": "We must be careful not to facilitate adaptations of the virus that make it more dangerous than it [already] is",
-            "alt_answer2": "Large language models (LLMs), such as ChatGPT, could become regular assistants for writing manuscripts, peer-review reports and grant applications. These artificial-intelligence (AI) tools could change how scientists interrogate and summarize results, producing 'papers on demand' from experimental data and vastly expanding the scope of meta-analyses and reviews",
-            "alt_answer3": "Public-awareness campaigns aimed at stopping behaviours that could bring people into contact with bat saliva can also help to prevent spillover of the virus",
-            "issued_exam": 2
-        }
-    },
-    {
-        "model": "examination.selectedquestion",
-        "pk": 3,
-        "fields": {
-            "question": "By derogation from point 4(i), when the continuing airworthiness of an aircraft not used in commercial air transport is managed by a continuing airworthiness management organisation approved in accordance with Section A, Subpart G, of this Annex (Part-M) not subject to the oversight of the Member State of registry, and only if agreed with the Member State of registry prior to the approval of the maintenance programme",
-            "essay_ref": 3,
-            "model_answer": "Coming from Mr Sunak, such a proposal is hard to take as seriously as it deserves",
-            "key_points": "Mr Sunak, proposal",
-            "multichoice_ref": null,
-            "correct_answer": "",
-            "alt_answer1": "",
-            "alt_answer2": "",
-            "alt_answer3": "",
-            "issued_exam": 3
-        }
-    },
-    {
-        "model": "examination.givenanswer",
-        "pk": 1,
-        "fields": {
-            "answer": "An international team of scientists Thursday unveiled the most comprehensive map of the human brain ever completed. It provides long-sought-after clues about what makes us human and sets a critical foundation for understanding and eventually treating brain-related conditions",
-            "is_correct": true,
-            "saving_time": "2023-10-22T04:00:00Z",
-            "creation_time": "2023-10-20T14:00:00Z",
-            "question": 1,
-            "username": 1
-        }
-    },
-    {
-        "model": "examination.givenanswer",
-        "pk": 2,
-        "fields": {
-            "answer": "Research on psychopathy has progressed considerably in recent years against the backdrop of important advances in the broader field of clinical psychological science",
-            "is_correct": null,
-            "saving_time": "2023-10-22T04:00:00Z",
-            "creation_time": "2023-10-20T14:00:00Z",
-            "question": 1,
-            "username": 1
-        }
-    },
-    {
-        "model": "examination.givenanswer",
-        "pk": 3,
-        "fields": {
-            "answer": "Filled with secrets from a therapist's toolkit, this is a must-have handbook for optimising your mental health. Dr Julie's simple but expert advice and powerful coping techniques will help you stay resilient no matter what life throws your way",
-            "is_correct": false,
-            "saving_time": "2023-10-22T04:00:00Z",
-            "creation_time": "2023-10-20T14:00:00Z",
-            "question": 1,
-            "username": 1
         }
     },
     {

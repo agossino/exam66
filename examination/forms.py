@@ -1,9 +1,5 @@
 from django import forms
 
-from .models import MultichoiceQuestion
 
-
-class MCQuestionForm(forms.ModelForm):
-    class Meta:
-        model = MultichoiceQuestion
-        fields = "__all__"
+class EssayAnswerForm(forms.Form):
+    answer = forms.CharField(max_length=500, strip=True)

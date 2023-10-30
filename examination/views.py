@@ -1,9 +1,29 @@
+from datetime import datetime, timedelta
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views.generic import DetailView, ListView, FormView, TemplateView
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.views.generic import (
+    DetailView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
+from http import HTTPStatus
+
+from .models import IssuedExam, MultichoiceQuestion, SelectedQuestion
+from .forms import EssayAnswerForm
+from .utils import user_get_401_or_none
 
 
-from .models import MultichoiceQuestion
-from .forms import MCQuestionForm
+SECONDS_PER_MULTICHOIICE_QUESTION = 75
+SECONDS_PER_ESSAY_QUESTION = 1200
+
+ALL_QUEST_IDS = "all_question_ids"
+MULTICHOICE_QUEST_IDS = "multichoice_question_ids"
+ESSAY_QUEST_IDS = "essay_question_ids"
+QUEST_LIST_INDEX = "current_question_list_index"
+LAST_LIST_INDEX = "last_question_list_index"
+CURRENT = "current_question"
 
 
 class HomeView(TemplateView):
@@ -31,7 +51,104 @@ class MCQuestionDetailView(PermissionRequiredMixin, DetailView):
     template_name = "examination/detail_mcquest.html"
 
 
-class MCQuestionFormView(FormView):
-    template_name = "examination/form.html"
-    form_class = MCQuestionForm
-    success_url = "/thanks/"
+def start_exam(request, issued_exam_id):
+    """Start page for the given issued exam"""
+    issued_exam = get_object_or_404(IssuedExam, pk=issued_exam_id)
+    rebut_401 = user_get_401_or_none(request, issued_exam)
+    if rebut_401 is not None:
+        return rebut_401
+
+    selected_questions = issued_exam.selectedquestion_set.all()
+    question_count = selected_questions.count()
+    if question_count > 0:
+        request.session[ALL_QUEST_IDS] = [
+            question.id for question in selected_questions
+        ]
+        multichoice_question_ids = [
+            question.id for question in selected_questions.exclude(multichoice_ref=None)
+        ]
+        request.session[MULTICHOICE_QUEST_IDS] = multichoice_question_ids
+        essay_question_ids = [
+            question.id for question in selected_questions.exclude(essay_ref=None)
+        ]
+        request.session[ESSAY_QUEST_IDS] = essay_question_ids
+        request.session[QUEST_LIST_INDEX] = 0
+        request.session[LAST_LIST_INDEX] = len(request.session[ALL_QUEST_IDS]) - 1
+    time_allowed = selected_questions.count() * SECONDS_PER_MULTICHOIICE_QUESTION
+    return render(
+        request,
+        "examination/start_exam.html",
+        {
+            "issued_exam": issued_exam,
+            "questions_count": question_count,
+            "time_allowed": time_allowed,
+        },
+    )
+
+
+class TakingExamView(PermissionRequiredMixin, UpdateView):
+    """This class manages an examination session.
+    It is called from start_exam.html with the IssuedExam pk in the url
+    or from taking_exam.html with IssuedExam pk and progress in the url,
+    a string that means which is the next SelectedQuestion to be showed."""
+
+    permission_required = "examination.change_givenanswer"
+    template_name = "examination/taking_exam.html"
+    fields = "__all__"
+    model = IssuedExam
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["current_issued_exam"] = self.kwargs.get(self.pk_url_kwarg)
+
+        self.request.session.get(ALL_QUEST_IDS)
+
+        current_question_id = self.request.session[ALL_QUEST_IDS][
+            self.request.session[QUEST_LIST_INDEX]
+        ]
+
+        context[CURRENT] = SelectedQuestion.objects.get(id=current_question_id)
+        context[QUEST_LIST_INDEX] = self.request.session[QUEST_LIST_INDEX]
+        context[LAST_LIST_INDEX] = self.request.session[LAST_LIST_INDEX]
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        selected_question_progress = self.kwargs.get("progress")
+
+        self.object = self.get_object()
+
+        question_ids = self.request.session.get(ALL_QUEST_IDS)
+
+        if question_ids is None:
+            response = HttpResponse("Requested page not found.")
+            response.status_code = HTTPStatus.NOT_FOUND
+            return response
+
+        if selected_question_progress is None:
+            time_allowed = (
+                len(self.request.session[MULTICHOICE_QUEST_IDS])
+                * SECONDS_PER_MULTICHOIICE_QUESTION
+            )
+            time_allowed += (
+                len(self.request.session[ESSAY_QUEST_IDS]) * SECONDS_PER_ESSAY_QUESTION
+            )
+            self.request.session["time_limit"] = str(
+                datetime.now() + timedelta(seconds=time_allowed)
+            )
+        else:
+            if selected_question_progress == "next":
+                self.request.session[QUEST_LIST_INDEX] += 1
+            elif selected_question_progress == "prev":
+                self.request.session[QUEST_LIST_INDEX] -= 1
+
+        context = self.get_context_data()
+        context["form"] = EssayAnswerForm(request.POST)
+
+        return render(request, self.template_name, context=context)
+
+    def get(self, request, *args, **kwargs):
+        response = HttpResponse("Method GET not allowed")
+        response.status_code = HTTPStatus.METHOD_NOT_ALLOWED
+        return response
