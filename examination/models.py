@@ -35,8 +35,6 @@ class MultichoiceQuestion(models.Model):
     answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
     alt_answer2 = models.TextField("The second wrong alternatate answer")
-    # TODO alt_answer3 to be deleted
-    alt_answer3 = models.TextField("The third wrong alternate answer")
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
     saving_time = models.DateTimeField("Saving time", auto_now=True)
@@ -80,9 +78,10 @@ class EssayQuestion(models.Model):
         return f"Essay Question: {self.text}"
 
 
-# TODO code = models.CharField("Licence category and subcategory code", unique=True, max_length=5)
 class LicenceCategory(models.Model):
-    code = models.CharField("Licence category and subcategory code", max_length=5)
+    code = models.CharField(
+        "Licence category and subcategory code", unique=True, max_length=5
+    )
     description = models.CharField(max_length=150, default="")
 
     def __str__(self) -> str:
@@ -112,11 +111,7 @@ class EssayAnswer(models.Model):
 class IssuedExam(models.Model):
     creation_time = models.DateTimeField("Creation time", auto_now_add=True)
     handout_time = models.DateTimeField("The time exam is handed out", null=True)
-    # TODO
-    # exam_tag = models.CharField(
-    #     "The name used to uniquely identify the examination", unique=True
-    # )
-    exam_identifier = models.CharField(
+    exam_tag = models.CharField(
         "The name used to uniquely identify the examination", unique=True
     )
     type = models.IntegerField(
@@ -131,7 +126,7 @@ class IssuedExam(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"Issued Exam: {self.exam_identifier}"
+        return f"Issued Exam: {self.exam_tag}"
 
 
 class SelectedQuestion(models.Model):
@@ -162,10 +157,6 @@ class SelectedQuestion(models.Model):
     alt_answer2 = models.TextField(
         "Multichoice second wrong alternatate answer", blank=True
     )
-    # TODO alt_answer3 to be deleted
-    alt_answer3 = models.TextField(
-        "Multichoice third wrong alternate answer", blank=True
-    )
 
     issued_exam = models.ForeignKey(
         IssuedExam,
@@ -180,7 +171,6 @@ class SelectedQuestion(models.Model):
             self.correct_answer = self.multichoice_ref.answer
             self.alt_answer1 = self.multichoice_ref.alt_answer1
             self.alt_answer2 = self.multichoice_ref.alt_answer2
-            self.alt_answer3 = self.multichoice_ref.alt_answer3
         else:
             self.question = self.essay_ref.question.text
             self.model_answer = self.essay_ref.model_answer
@@ -189,19 +179,11 @@ class SelectedQuestion(models.Model):
 
     class Meta:
         ordering = ("issued_exam",)
-        # TODO
-        # constraints = [
-        #     models.CheckConstraint(
-        #         check=models.Q(essay_ref__isnull=True)
-        #         ^ models.Q(multichoice_ref__isnull=True),
-        #         name="Refer to an Essay Question xor a Multichoice Question",
-        #     ),
-        # ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(essay_ref__isnull=True)
                 ^ models.Q(multichoice_ref__isnull=True),
-                name="It must refer to an Essay Question exclusive or a Multichoice Question",
+                name="Refer to an Essay Question xor a Multichoice Question",
             ),
         ]
 

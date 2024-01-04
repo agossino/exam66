@@ -49,7 +49,7 @@ class TestModels:
         assert essay_answer.model_answer in str(essay_answer)
         assert mc_question.text in str(mc_question)
         assert f" {category.code}" in str(category)
-        assert issued_exam.exam_identifier in str(issued_exam)
+        assert issued_exam.exam_tag in str(issued_exam)
         assert str(selected_essay_question[0].question) in str(
             selected_essay_question[0]
         )
@@ -78,7 +78,6 @@ class TestModels:
         assert selected_multichoice_question.correct_answer != ""
         assert selected_multichoice_question.alt_answer1 != ""
         assert selected_multichoice_question.alt_answer2 != ""
-        assert selected_multichoice_question.alt_answer3 != ""
         assert selected_multichoice_question.model_answer == ""
 
     def test_selected_essay_question_save(self):

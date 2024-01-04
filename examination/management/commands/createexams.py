@@ -33,7 +33,7 @@ class Command(BaseCommand):
             group = Group.objects.create(name=exam_tag_group_name)
             group.permissions.add(*permissions)
             IssuedExam.objects.create(
-                exam_identifier=exam_tag_group_name,
+                exam_tag=exam_tag_group_name,
                 type=EXAMINATION_TYPE[0][0],
                 groupname=group,
             )

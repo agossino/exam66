@@ -1,0 +1,11 @@
+{% extends "examination/taking_exam.html" %}
+
+
+{% block exam_block %}
+<H1>Question: {{ current_question }}</H1>
+<form action="{% url 'taking_exam' current_issued_exam %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <input type="submit" value="Submit">
+</form>
+{% endblock exam_block %}

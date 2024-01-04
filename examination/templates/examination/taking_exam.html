@@ -5,13 +5,12 @@
 <p>Examination: {{ object.exam_identifier }}</p>
 <p>current_question_index {{ current_question_list_index }}</p>
 <p>last_question_index {{ last_question_list_index }}</p>
-<p>Question: {{ current_question }}</p>
 
-<form action="{% url 'taking_exam' current_issued_exam %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p}}
-    <input type="submit" value="Submit">
-</form>
+{% block exam_block %}
+<p>Question: {{ current_question }}</p>
+{% endblock exam_block %}
+
+
 
 <p>
 {% if current_question_list_index > 0 %}

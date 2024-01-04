@@ -11,7 +11,7 @@ from django.views.generic import (
 from http import HTTPStatus
 
 from .models import IssuedExam, MultichoiceQuestion, SelectedQuestion
-from .forms import EssayAnswerForm
+from .forms import EssayAnswerForm, MultichoiceForm
 from .utils import user_get_401_or_none
 
 # TODO Multichoice questions in basic examination stardard have a
@@ -96,9 +96,10 @@ class TakingExamView(PermissionRequiredMixin, UpdateView):
     a string that means which is the next SelectedQuestion to be showed."""
 
     permission_required = "examination.change_givenanswer"
-    template_name = "examination/taking_exam.html"
+    template_name = "examination/question_exam.html"
     fields = "__all__"
     model = IssuedExam
+    form = None
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -119,6 +120,8 @@ class TakingExamView(PermissionRequiredMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         selected_question_progress = self.kwargs.get("progress")
+
+        self._get_answer()
 
         self.object = self.get_object()
 
@@ -147,7 +150,12 @@ class TakingExamView(PermissionRequiredMixin, UpdateView):
                 self.request.session[QUEST_LIST_INDEX] -= 1
 
         context = self.get_context_data()
-        context["form"] = EssayAnswerForm(request.POST)
+        if context[CURRENT].essay_ref is not None:
+            self.form = EssayAnswerForm(request.POST)
+        else:
+            self.form = MultichoiceForm(request.POST)
+        context["form"] = self.form
+        self._get_answer()
 
         return render(request, self.template_name, context=context)
 
@@ -155,3 +163,7 @@ class TakingExamView(PermissionRequiredMixin, UpdateView):
         response = HttpResponse("Method GET not allowed")
         response.status_code = HTTPStatus.METHOD_NOT_ALLOWED
         return response
+
+    def _get_answer(self):
+        if self.form is not None:
+            print(self.form)

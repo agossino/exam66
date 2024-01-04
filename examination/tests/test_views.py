@@ -122,7 +122,7 @@ def test_start_exam_check_content(client):
 
     exam = IssuedExam.objects.get(id=exam_id)
 
-    assert exam.exam_identifier.encode() in response.content
+    assert exam.exam_tag.encode() in response.content
 
 
 @pytest.mark.django_db
