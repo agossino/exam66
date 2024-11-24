@@ -1,0 +1,3 @@
+README.rst -diff
+examination/fixtures/* -diff
+examination/migrations/* -diff
