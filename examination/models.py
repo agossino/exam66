@@ -34,9 +34,7 @@ class MultichoiceQuestion(models.Model):
     )
     answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
-    alt_answer2 = models.TextField("The second wrong alternatate answer")
-    # TODO alt_answer3 to be deleted
-    alt_answer3 = models.TextField("The third wrong alternate answer")
+    alt_answer2 = models.TextField("The second wrong alternate answer")
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
     saving_time = models.DateTimeField("Saving time", auto_now=True)
@@ -80,7 +78,6 @@ class EssayQuestion(models.Model):
         return f"Essay Question: {self.text}"
 
 
-# TODO code = models.CharField("Licence category and subcategory code", unique=True, max_length=5)
 class LicenceCategory(models.Model):
     code = models.CharField("Licence category and subcategory code", max_length=5)
     description = models.CharField(max_length=150, default="")
@@ -160,16 +157,12 @@ class SelectedQuestion(models.Model):
         "Multichoice first wrong alternate answer", blank=True
     )
     alt_answer2 = models.TextField(
-        "Multichoice second wrong alternatate answer", blank=True
-    )
-    # TODO alt_answer3 to be deleted
-    alt_answer3 = models.TextField(
-        "Multichoice third wrong alternate answer", blank=True
+        "Multichoice second wrong alternate answer", blank=True
     )
 
     issued_exam = models.ForeignKey(
         IssuedExam,
-        verbose_name="The examination this given answer belongs to",
+        verbose_name="The examination this answer belongs to",
         on_delete=models.PROTECT,
         null=True,
     )
@@ -180,7 +173,6 @@ class SelectedQuestion(models.Model):
             self.correct_answer = self.multichoice_ref.answer
             self.alt_answer1 = self.multichoice_ref.alt_answer1
             self.alt_answer2 = self.multichoice_ref.alt_answer2
-            self.alt_answer3 = self.multichoice_ref.alt_answer3
         else:
             self.question = self.essay_ref.question.text
             self.model_answer = self.essay_ref.model_answer
@@ -189,14 +181,6 @@ class SelectedQuestion(models.Model):
 
     class Meta:
         ordering = ("issued_exam",)
-        # TODO
-        # constraints = [
-        #     models.CheckConstraint(
-        #         check=models.Q(essay_ref__isnull=True)
-        #         ^ models.Q(multichoice_ref__isnull=True),
-        #         name="Refer to an Essay Question xor a Multichoice Question",
-        #     ),
-        # ]
         constraints = [
             models.CheckConstraint(
                 check=models.Q(essay_ref__isnull=True)
@@ -241,7 +225,7 @@ class SubjectModule(models.Model):
     description = models.CharField("Subject Module description", max_length=150)
     licence_category = models.ManyToManyField(
         LicenceCategory,
-        verbose_name="Licence category and subcategory this module refers to",
+        verbose_name="License category and subcategory this module refers to",
     )
 
     class Meta:
