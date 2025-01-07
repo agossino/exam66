@@ -34,7 +34,11 @@ class MultichoiceQuestion(models.Model):
     )
     answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
+<<<<<<< HEAD
     alt_answer2 = models.TextField("The second wrong alternatate answer")
+=======
+    alt_answer2 = models.TextField("The second wrong alternate answer")
+>>>>>>> del_alt_answer3
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
     saving_time = models.DateTimeField("Saving time", auto_now=True)
@@ -155,12 +159,12 @@ class SelectedQuestion(models.Model):
         "Multichoice first wrong alternate answer", blank=True
     )
     alt_answer2 = models.TextField(
-        "Multichoice second wrong alternatate answer", blank=True
+        "Multichoice second wrong alternate answer", blank=True
     )
 
     issued_exam = models.ForeignKey(
         IssuedExam,
-        verbose_name="The examination this given answer belongs to",
+        verbose_name="The examination this answer belongs to",
         on_delete=models.PROTECT,
         null=True,
     )
@@ -223,7 +227,7 @@ class SubjectModule(models.Model):
     description = models.CharField("Subject Module description", max_length=150)
     licence_category = models.ManyToManyField(
         LicenceCategory,
-        verbose_name="Licence category and subcategory this module refers to",
+        verbose_name="License category and subcategory this module refers to",
     )
 
     class Meta:
