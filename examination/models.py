@@ -34,11 +34,7 @@ class MultichoiceQuestion(models.Model):
     )
     answer = models.TextField("The correct answer")
     alt_answer1 = models.TextField("The first wrong alternate answer")
-<<<<<<< HEAD
-    alt_answer2 = models.TextField("The second wrong alternatate answer")
-=======
     alt_answer2 = models.TextField("The second wrong alternate answer")
->>>>>>> del_alt_answer3
     is_valid = models.BooleanField("Question validity", default=True)
     level = models.IntegerField("Training level", choices=LEVEL)
     saving_time = models.DateTimeField("Saving time", auto_now=True)
@@ -115,7 +111,7 @@ class EssayAnswer(models.Model):
 class IssuedExam(models.Model):
     creation_time = models.DateTimeField("Creation time", auto_now_add=True)
     handout_time = models.DateTimeField("The time exam is handed out", null=True)
-    exam_tag = models.CharField(
+    exam_identifier = models.CharField(
         "The name used to uniquely identify the examination", unique=True
     )
     type = models.IntegerField(
@@ -130,7 +126,7 @@ class IssuedExam(models.Model):
     )
 
     def __str__(self) -> str:
-        return f"Issued Exam: {self.exam_tag}"
+        return f"Issued Exam: {self.exam_identifier}"
 
 
 class SelectedQuestion(models.Model):

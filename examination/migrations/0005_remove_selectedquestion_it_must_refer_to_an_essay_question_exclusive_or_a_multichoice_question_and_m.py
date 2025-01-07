@@ -13,11 +13,6 @@ class Migration(migrations.Migration):
             model_name="selectedquestion",
             name="It must refer to an Essay Question exclusive or a Multichoice Question",
         ),
-        migrations.RenameField(
-            model_name="issuedexam",
-            old_name="exam_identifier",
-            new_name="exam_tag",
-        ),
         migrations.RemoveField(
             model_name="multichoicequestion",
             name="alt_answer3",
