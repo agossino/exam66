@@ -23,8 +23,4 @@ class Migration(migrations.Migration):
                 name="Refer to an Essay Question xor a Multichoice Question",
             ),
         ),
-        migrations.RemoveField(
-            model_name="selectedquestion",
-            name="alt_answer3",
-        ),
     ]
