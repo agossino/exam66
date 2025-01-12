@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
     path("", views.HomeView.as_view(), name="home"),
-    # path("accounts/", include("django.contrib.auth.urls")),
     path("list_mcquestions/", views.MCQuestionListView.as_view(), name="ls_mcquest"),
     path(
         "detail_mcquestions/<int:pk>/",

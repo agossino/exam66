@@ -14,6 +14,7 @@
   <div id="nav">
     {% block nav_block %}
     <div><a href="{% url 'home' %}">Home</a></div>
+    <div><a href="{% url 'admin:index' %}">Admin</a></div>
     <div><a href="{% url 'ls_mcquest' %}">Multichoice Questions</a></div>
     {% if user.is_authenticated %}
     <div> {{ user }}</div>
