@@ -1,21 +1,20 @@
 run:
-	poetry run python manage.py runserver
+	uv run python manage.py runserver
 
 lint:
-	poetry run black examination/ exam66/
-	poetry run ruff check --fix examination/ exam66/
+	uv run ruff check --fix examination/ exam66/
 
-test:
-	poetry run pytest
+#test:
+#	poetry run pytest
 
-dump-testdb:
-	export DROPDB=TRUE; poetry run pytest examination/tests/test_command.py::test_dumpdb
+#dump-testdb:
+#	export DROPDB=TRUE; poetry run pytest examination/tests/test_command.py::test_dumpdb
 
-run-testdb:
-	poetry run python manage.py testserver test_db_dump.json
+#run-testdb:
+#	poetry run python manage.py testserver test_db_dump.json
 
-cov:
-	poetry run pytest --cov-report term-missing --cov=examination
+#cov:
+#	poetry run pytest --cov-report term-missing --cov=examination
 
 drop-testdb:
 	dropdb -h localhost -U user test_exam66db

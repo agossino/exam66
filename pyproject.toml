@@ -1,28 +1,20 @@
-[tool.poetry]
+[project]
 name = "exam66"
 version = "0.1.0"
 description = "Django app for managing examination questions."
 authors = ["Giancarlo Ossino <gcossino@gmail.com>"]
 license = "MIT License"
 readme = "README.rst"
+requires-python = ">=3.11"
+dependencies = [
+    "django>=5.1.4",
+    "psycopg2-binary>=2.9.10",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-Django = "^4.2.5"
-psycopg2-binary = "^2.9.7"
-mypy = "^1.7.1"
-
-[tool.poetry.group.dev.dependencies]
-black = "^23.9.1"
-pytest = "^7.4.2"
-pytest-django = "^4.5.2"
-pytest-cov = "^4.1.0"
-ruff = "^0.0.291"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
-[tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "exam66.settings"
-python_files = ["examination/tests/test_*.py"]
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4",
+    "pytest-cov>=6.0.0",
+    "pytest-django>=4.9.0",
+    "ruff>=0.9.1",
+]
