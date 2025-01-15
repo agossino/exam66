@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block content_block %}
+{% block content %}
 {% for question in questions %}
 <li><a href="{{ question.get_absolute_url }}">{{ question.id }}</a>
 {{ question.text }} {{question.chapter}} {{question.module}} {{ question.level }}</li>
 {% endfor %}
 {% include "pagination.html" %}
-{% endblock content_block %}
+{% endblock content %}

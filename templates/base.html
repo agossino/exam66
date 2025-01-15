@@ -6,28 +6,37 @@
 <head>
   {% load static %}
   <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-  <link rel="stylesheet" href="{% static 'style.css' %}">
+
   <title>{% block title_block %}My amazing site{% endblock title_block %}</title>
+  
+  {% load django_bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
 </head>
 
 <body>
-  <div id="nav">
-    {% block nav_block %}
-    <div><a href="{% url 'home' %}">Home</a></div>
-    <div><a href="{% url 'admin:index' %}">Admin</a></div>
-    <div><a href="{% url 'ls_mcquest' %}">Multichoice Questions</a></div>
-    {% if user.is_authenticated %}
-    <div> {{ user }}</div>
-    <div><a href="/accounts/logout">Logout</a></div>
-    {% else %}
-    <div><a href="/accounts/login">Login</a></div>
-    {% endif %}
-    {% endblock nav_block %}
-  </div>
 
-  <div id="content">
-    {% block content_block %}{% endblock content_block %}
-  </div>
+  {% block bootstrap5_content %}
+    <div class="container">
+        <h1>{% block title %}Page Title{% endblock %}</h1>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'ls_mcquest' %}">Multichoice Questions</a></li>
+            {% if user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="/accounts/logout">Logout</a></li>
+            <li class="nav-item"> {{ user }}</li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="/accounts/login">Logoin</a></li>
+            {% endif %}
+        </ul>
+
+        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
+
+        {% block content %}(no content){% endblock %}
+    </div>
+  {% endblock %}
 </body>
 
 </html>
