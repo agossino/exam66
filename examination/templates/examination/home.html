@@ -1,5 +1,33 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h1>Ciao from Home!</h1>
-{% endblock content %}
+{% load django_bootstrap5 %}
+
+{% block bootstrap5_content %}
+    <div class="container">
+        <h1>{% block title %}Page Title{% endblock %}</h1>
+
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'ls_mcquest' %}">Multichoice Questions</a></li>
+            {% if user.is_authenticated %}
+            {% include "registration/_logout.html" %}
+            
+            <!-- <li class="nav-item"><a class="nav-link" href="registration/_logout.html">Logout</a></li>-->
+            <li class="nav-item"> {{ user }}</li>
+            {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'sign_up' %}">Sign up</a></li>
+            {% endif %}
+        </ul>
+
+
+
+        {% autoescape off %}
+        {% endautoescape %}
+
+        {% bootstrap_messages %}
+
+        {% block content %}Ciao from Home!{% endblock %}
+    </div>
+  {% endblock %}

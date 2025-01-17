@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "examination.apps.ExaminationConfig",
+    "users.apps.UsersConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -141,6 +142,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
-# Added for after login redirect
+# Redirection after a successful login; redirection in users/templates/registration/login.html
 
-LOGIN_REDIRECT_URL = "/examination/"
+#LOGIN_REDIRECT_URL = "/examination/"

@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "examination/home.html" %}
 
+{% load django_bootstrap5 %}
 {% block content %}
 {% for question in questions %}
 <li><a href="{{ question.get_absolute_url }}">{{ question.id }}</a>

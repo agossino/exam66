@@ -1,42 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+{% extends 'django_bootstrap5/bootstrap5.html' %}
 
-<head>
-  {% load static %}
-  <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
-
-  <title>{% block title_block %}My amazing site{% endblock title_block %}</title>
-  
-  {% load django_bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-</head>
-
-<body>
-
-  {% block bootstrap5_content %}
-    <div class="container">
-        <h1>{% block title %}Page Title{% endblock %}</h1>
-
-        <ul class="nav nav-pills">
-            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Admin</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'ls_mcquest' %}">Multichoice Questions</a></li>
-            {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="/accounts/logout">Logout</a></li>
-            <li class="nav-item"> {{ user }}</li>
-            {% else %}
-            <li class="nav-item"><a class="nav-link" href="/accounts/login">Logoin</a></li>
-            {% endif %}
-        </ul>
-
-        {% autoescape off %}{% bootstrap_messages %}{% endautoescape %}
-
-        {% block content %}(no content){% endblock %}
-    </div>
-  {% endblock %}
-</body>
-
-</html>
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
