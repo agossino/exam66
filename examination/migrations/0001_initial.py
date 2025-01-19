@@ -333,7 +333,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="multichoicequestion",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     ("module__isnull", True),
                     ("chapter__isnull", True),
                     _connector="XOR",
@@ -344,7 +344,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="givenanswer",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     models.Q(
                         models.Q(("essay_ref__isnull", True), _negated=True),
                         models.Q(("model_answer__exact", ""), _negated=True),
@@ -363,7 +363,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="givenanswer",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     models.Q(
                         models.Q(("multichoice_ref__isnull", True), _negated=True),
                         models.Q(("right_answer__exact", ""), _negated=True),
@@ -386,7 +386,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="givenanswer",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     models.Q(
                         models.Q(("essay_ref__isnull", True), _negated=True),
                         models.Q(("model_answer__exact", ""), _negated=True),

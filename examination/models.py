@@ -46,7 +46,7 @@ class MultichoiceQuestion(models.Model):
         ordering = ("module", "chapter", "saving_time")
         constraints = [
             models.CheckConstraint(
-                check=models.Q(module__isnull=True) ^ models.Q(chapter__isnull=True),
+                condition=models.Q(module__isnull=True) ^ models.Q(chapter__isnull=True),
                 name="module_xor_chapter",
             )
         ]
@@ -181,7 +181,7 @@ class SelectedQuestion(models.Model):
         ordering = ("issued_exam",)
         constraints = [
             models.CheckConstraint(
-                check=models.Q(essay_ref__isnull=True)
+                condition=models.Q(essay_ref__isnull=True)
                 ^ models.Q(multichoice_ref__isnull=True),
                 name="Refer to an Essay Question xor a Multichoice Question",
             ),

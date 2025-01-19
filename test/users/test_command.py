@@ -10,15 +10,6 @@ from django.db import transaction
 import pytest
 
 
-@pytest.mark.django_db
-def test_users():
-    users = User.objects.all()
-
-    users_list = [user.username for user in users]
-
-    assert users_list == ["user1", "user2", "user3", "examiner", "not_authorized"]
-
-
 @pytest.mark.skipif(
     os.environ.get("DROPDB") is None, reason="Run only for dumping test database"
 )

@@ -13,8 +13,8 @@ from examination.models import (
 )
 
 
-@pytest.fixture(scope="session")
-def django_db_setup(django_db_setup, django_db_blocker):
+@pytest.fixture()
+def django_db_setup(django_db_blocker):
     """1. load data (models: SubjectModule, ChapterGroup, Chapter,
     LicenceCategory, MultichoiceQuestion, EssayQuestion, EssayAnswer);
     2. create three IssuedExam with three new Group with required permissions;
@@ -34,7 +34,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
         call_command("createexams", exam_1, exam_2, exam_3)
 
         # 3.
-        issued_exam_1 = IssuedExam.objects.get(exam_tag=exam_1)
+        issued_exam_1 = IssuedExam.objects.get(exam_identifier=exam_1)
         multichoice_question_1 = MultichoiceQuestion.objects.get(id=1)
         SelectedQuestion.objects.create(
             multichoice_ref=multichoice_question_1, issued_exam=issued_exam_1
@@ -52,7 +52,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
             essay_ref=essay_answer_4, issued_exam=issued_exam_1
         )
 
-        issued_exam_2 = IssuedExam.objects.get(exam_tag=exam_2)
+        issued_exam_2 = IssuedExam.objects.get(exam_identifier=exam_2)
         essay_answer_2 = EssayAnswer.objects.get(id=2)
         SelectedQuestion.objects.create(
             essay_ref=essay_answer_2, issued_exam=issued_exam_2
@@ -104,7 +104,7 @@ def django_db_setup(django_db_setup, django_db_blocker):
         ]
         examiner.user_permissions.set(permissions)
 
-        # 5.
+        # 6.
         user = User.objects.get(username=username_1)
         selected_questions = SelectedQuestion.objects.filter(issued_exam=issued_exam_1)
         for selected_question in selected_questions:

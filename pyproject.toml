@@ -19,3 +19,6 @@ dev = [
     "pytest-django>=4.9.0",
     "ruff>=0.9.1",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "exam66.settings"

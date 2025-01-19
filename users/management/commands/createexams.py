@@ -12,12 +12,12 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "exam_tags_group_name", help="IssuedExam and Group to be created", nargs="*"
+            "exam_identifiers_group_name", help="IssuedExam and Group to be created", nargs="*"
         )
 
     def handle(self, *args, **kwargs):
-        """ "Create IssuedExam with the given exam_tag, new Group for each exam
-        with exam_tag as name, and add the relevant Permission to the group."""
+        """ "Create IssuedExam with the given exam_identifier, new Group for each exam
+        with exam_identifier as name, and add the relevant Permission to the group."""
         permission_codenames = (
             "view_issuedexam",
             "view_selectedquestion",
@@ -25,21 +25,21 @@ class Command(BaseCommand):
             "change_givenanswer",
         )
 
-        for exam_tag_group_name in kwargs["exam_tags_group_name"]:
+        for exam_identifier_group_name in kwargs["exam_identifiers_group_name"]:
             permissions = [
                 Permission.objects.get(codename=permission)
                 for permission in permission_codenames
             ]
-            group = Group.objects.create(name=exam_tag_group_name)
+            group = Group.objects.create(name=exam_identifier_group_name)
             group.permissions.add(*permissions)
             IssuedExam.objects.create(
-                exam_tag=exam_tag_group_name,
+                exam_identifier=exam_identifier_group_name,
                 type=EXAMINATION_TYPE[0][0],
                 groupname=group,
             )
             self.stdout.write(
                 self.style.SUCCESS(
-                    "IssuedExam and Group %s created" % exam_tag_group_name
+                    "IssuedExam and Group %s created" % exam_identifier_group_name
                 )
             )
             for codename in permissions:

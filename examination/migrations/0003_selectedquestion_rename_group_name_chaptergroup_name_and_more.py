@@ -126,7 +126,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="selectedquestion",
             constraint=models.CheckConstraint(
-                check=models.Q(
+                condition=models.Q(
                     ("essay_ref__isnull", True),
                     ("multichoice_ref__isnull", True),
                     _connector="XOR",

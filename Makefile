@@ -4,11 +4,14 @@ run:
 lint:
 	uv run ruff check --fix examination/ exam66/
 
-#test:
-#	poetry run pytest
+test:
+	uv run pytest
 
-#dump-testdb:
-#	export DROPDB=TRUE; poetry run pytest examination/tests/test_command.py::test_dumpdb
+test_noconf:
+	uv run pytest --noconftest
+
+dump-testdb:
+	DROPDB=TRUE uv run pytest examination/tests/test_command.py::test_dumpdb
 
 #run-testdb:
 #	poetry run python manage.py testserver test_db_dump.json

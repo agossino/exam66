@@ -49,7 +49,7 @@ class TestModels:
         assert essay_answer.model_answer in str(essay_answer)
         assert mc_question.text in str(mc_question)
         assert f" {category.code}" in str(category)
-        assert issued_exam.exam_tag in str(issued_exam)
+        assert issued_exam.exam_identifier in str(issued_exam)
         assert str(selected_essay_question[0].question) in str(
             selected_essay_question[0]
         )
