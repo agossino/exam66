@@ -12,7 +12,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "exam_identifiers_group_name", help="IssuedExam and Group to be created", nargs="*"
+            "exam_identifiers_group_name",
+            help="IssuedExam and Group to be created",
+            nargs="*",
         )
 
     def handle(self, *args, **kwargs):

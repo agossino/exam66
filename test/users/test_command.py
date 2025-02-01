@@ -2,12 +2,14 @@ from io import StringIO
 import os
 
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db import transaction
 
 import pytest
+
+from examination.models import IssuedExam
 
 
 @pytest.mark.skipif(
@@ -147,3 +149,50 @@ class TestCreateuser:
         )
 
         assert f"{user} created" in out.getvalue()
+
+
+@pytest.mark.django_db
+class TestCreateexams:
+    permission_codenames = {
+        "view_issuedexam",
+        "view_selectedquestion",
+        "view_givenanswer",
+        "change_givenanswer",
+    }
+    def test_createexam(self):
+        exam_name = "exam 1"
+        call_command("createexams", exam_name)
+        permissions = set(
+            [
+                permission.codename
+                for permission in Group.objects.get(name=exam_name).permissions.all()
+            ]
+        )
+        issued_exam = IssuedExam.objects.get(exam_identifier=exam_name)
+
+        assert permissions == self.permission_codenames
+        assert str(issued_exam) == f"Issued Exam: {exam_name}"
+
+    
+    def test_createexam_3_args(self):
+        exam_names = ("exam 1", "exam 2", "exam 3")
+        call_command("createexams", *exam_names)
+        for exam_name in exam_names:
+            permissions = set(
+                [
+                    permission.codename
+                    for permission in Group.objects.get(name=exam_name).permissions.all()
+                ]
+            )
+            issued_exam = IssuedExam.objects.get(exam_identifier=exam_name)
+
+            assert permissions == self.permission_codenames
+            assert str(issued_exam) == f"Issued Exam: {exam_name}"
+
+
+def test_conftest(db_setup):
+    """test if fixture db_setup has loaded data
+    """
+    from examination.models import MultichoiceQuestion
+
+    assert MultichoiceQuestion.objects.count() == 4

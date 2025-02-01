@@ -4,8 +4,10 @@ from django.urls import reverse
 
 from .forms import CustomUserCreationForm
 
+
 def dashboard(request):
     return render(request, "users/dashboard.html")
+
 
 def sign_up(request):
     if request.method == "POST":

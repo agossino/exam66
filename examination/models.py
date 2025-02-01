@@ -46,7 +46,8 @@ class MultichoiceQuestion(models.Model):
         ordering = ("module", "chapter", "saving_time")
         constraints = [
             models.CheckConstraint(
-                condition=models.Q(module__isnull=True) ^ models.Q(chapter__isnull=True),
+                condition=models.Q(module__isnull=True)
+                ^ models.Q(chapter__isnull=True),
                 name="module_xor_chapter",
             )
         ]

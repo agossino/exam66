@@ -16,8 +16,10 @@ dump-testdb:
 #run-testdb:
 #	poetry run python manage.py testserver test_db_dump.json
 
-#cov:
-#	poetry run pytest --cov-report term-missing --cov=examination
+cov:
+#	uv run pytest --cov=path_to_be_checked_for_coverage --cov-report term-missing path_where_test_is_located
+#	you can check even if the source of your test is executed (in order to discover some anomalies):
+	uv run pytest --cov=users/ --cov=test/users/ --cov-report term-missing test/users/
 
 drop-testdb:
 	dropdb -h localhost -U user test_exam66db

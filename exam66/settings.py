@@ -144,4 +144,4 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Redirection after a successful login; redirection in users/templates/registration/login.html
 
-#LOGIN_REDIRECT_URL = "/examination/"
+# LOGIN_REDIRECT_URL = "/examination/"
