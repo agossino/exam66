@@ -24,8 +24,8 @@ cov:
 drop-testdb:
 	dropdb -h localhost -U user test_exam66db
 
-start-cont:
-	docker start psqlbox
+up:
+	docker compose up -d
 
-run-cont:
-	docker run -itd -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pw -p 5432:5432 --mount source=exam66vol,target=/var/lib/postgresql/data --name psqlbox postgres
+down:
+	docker compose down

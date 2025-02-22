@@ -14,10 +14,13 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "faker>=35.2.0",
     "pytest>=8.3.4",
     "pytest-cov>=6.0.0",
     "pytest-django>=4.9.0",
+    "pytest-factoryboy>=2.7.0",
     "ruff>=0.9.1",
+    "selenium>=4.28.1",
 ]
 
 [tool.pytest.ini_options]

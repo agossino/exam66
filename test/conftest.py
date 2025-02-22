@@ -1,8 +1,11 @@
 import pytest
-
-from django.core.management import call_command
+from pytest_factoryboy import register
 
 from django.contrib.auth.models import Permission, User
+from django.core.management import call_command
+
+from selenium import webdriver
+
 
 from examination.models import (
     EssayAnswer,
@@ -12,7 +15,59 @@ from examination.models import (
     SelectedQuestion,
 )
 
-# @pytest.mark.skip
+from test.factories import (
+    GroupFactory,
+    EssayQuestionFactory,
+    SubjectModuleFactory,
+    UserFactory,
+)
+
+register(GroupFactory)  # group_factory
+register(UserFactory)  # user_factory
+register(SubjectModuleFactory)  # ...
+register(EssayQuestionFactory)  # ...
+
+
+@pytest.fixture
+def new_subject_modules(subject_module_factory):
+    subject_module_factory.create_batch(3)
+
+
+@pytest.fixture
+def new_essay_questions(essay_question_factory):
+        essay_question_factory.create_batch(3)
+
+
+@pytest.fixture(params=["chrome", "firefox"], scope="class")
+def selenium_drivers_init(request):
+    if request.param == "chrome":
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")
+        service = webdriver.ChromeService(executable_path="/home/ago/bin/chromedriver")
+        web_driver = webdriver.Chrome(service=service, options=options)
+    if request.param == "firefox":
+        options = webdriver.FirefoxOptions()
+        options.add_argument("--headless")
+        service = webdriver.FirefoxService(executable_path="/home/ago/bin/geckodriver")
+        web_driver = webdriver.Firefox(service=service, options=options)
+
+    request.cls.driver = web_driver
+    yield
+    web_driver.close()
+
+
+@pytest.fixture
+def new_user(group_factory, user_factory):
+    group_factory.create(name="examiner")
+    group_factory.create(name="examinee A")
+    group_factory.create(name="examinee B")
+    group_factory.create(name="examinee C")
+    group_factory.create(name="examinee D")
+
+    # user = user_factory.create(groups="examiner")
+    # return user
+
+
 @pytest.fixture
 def db_setup(db):
     """1. load data (models: SubjectModule, ChapterGroup, Chapter,

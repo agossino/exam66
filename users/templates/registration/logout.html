@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block bootstrap5_content %}
+    <h2>Logiout</h2>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="nav-link" value="Logout" />
+        <input type="hidden" name="next" value="{% url 'dashboard' %}" />
+    </form>
+{% endblock %}
